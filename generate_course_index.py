@@ -2,7 +2,7 @@
 Generate master course index in both Markdown and HTML formats
 - Extracts lesson info from .tex files
 - Counts slides and charts per lesson
-- Outputs: COURSE_INDEX.md and index.html
+- Outputs: COURSE_INDEX.md and index.html (quality-optimized)
 """
 from pathlib import Path
 import re
@@ -45,10 +45,8 @@ def get_lesson_info(lesson_folder):
     slides = 0
     if tex_file.exists():
         content = tex_file.read_text(encoding='utf-8', errors='ignore')
-        # Count \begin{frame} occurrences
         slides = len(re.findall(r'\\begin\{frame\}', content))
 
-    # Get chart names
     chart_names = sorted([d.name for d in chart_folders])
 
     return {
@@ -68,7 +66,6 @@ def generate_markdown(lessons):
     lines.append(f"*Generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}*")
     lines.append("")
 
-    # Summary
     total_slides = sum(l['slides'] for l in lessons)
     total_charts = sum(l['charts'] for l in lessons)
     lines.append("## Course Overview")
@@ -79,7 +76,6 @@ def generate_markdown(lessons):
     lines.append(f"- **Modules:** 10")
     lines.append("")
 
-    # Module breakdown
     for mod_num, (mod_name, lesson_range) in MODULES.items():
         lines.append(f"## Module {mod_num}: {mod_name}")
         lines.append("")
@@ -97,7 +93,6 @@ def generate_markdown(lessons):
                 lines.append(f"- **Charts:** {charts_str}")
             lines.append("")
 
-    # Quick reference
     lines.append("---")
     lines.append("")
     lines.append("## Quick Reference")
@@ -130,90 +125,245 @@ def generate_markdown(lessons):
     return "\n".join(lines)
 
 def generate_html(lessons):
-    """Generate index.html content."""
+    """Generate quality-optimized index.html content."""
     total_slides = sum(l['slides'] for l in lessons)
     total_charts = sum(l['charts'] for l in lessons)
+    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M')
 
     html = f'''<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Data Science with Python BSc Course - 48 lessons covering Python, ML, NLP, and deployment. {total_slides} slides, {total_charts} charts.">
+    <meta property="og:title" content="Data Science with Python - Course Index">
+    <meta property="og:description" content="48 lessons, {total_slides} slides, {total_charts} charts - Complete BSc curriculum covering Python to ML deployment">
+    <meta property="og:image" content="https://digital-ai-finance.github.io/data-science/og-image.png">
+    <meta property="og:url" content="https://digital-ai-finance.github.io/data-science/">
+    <meta property="og:type" content="website">
     <title>Data Science with Python - Course Index</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27><text y=%27.9em%27 font-size=%2790%27>&#128202;</text></svg>">
     <style>
+        :root {{
+            --bg: #f5f5f5;
+            --bg-card: white;
+            --text: #333;
+            --text-muted: #666;
+            --border: #eee;
+            --primary: #3498db;
+            --primary-dark: #2c3e50;
+            --hover: #f8f9fa;
+            --badge-bg: #ecf0f1;
+        }}
+        [data-theme="dark"] {{
+            --bg: #1a1a2e;
+            --bg-card: #16213e;
+            --text: #eee;
+            --text-muted: #aaa;
+            --border: #0f3460;
+            --primary: #4fa3d1;
+            --primary-dark: #0f3460;
+            --hover: #1f4068;
+            --badge-bg: #0f3460;
+        }}
         * {{ box-sizing: border-box; margin: 0; padding: 0; }}
-        body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; background: #f5f5f5; }}
-        .container {{ max-width: 1200px; margin: 0 auto; padding: 20px; }}
-        header {{ background: #2c3e50; color: white; padding: 30px 20px; margin-bottom: 30px; border-radius: 8px; }}
-        h1 {{ font-size: 2em; margin-bottom: 10px; }}
-        .stats {{ display: flex; gap: 30px; margin-top: 15px; }}
-        .stat {{ background: rgba(255,255,255,0.1); padding: 10px 20px; border-radius: 5px; }}
-        .stat-value {{ font-size: 1.5em; font-weight: bold; }}
-        .stat-label {{ font-size: 0.9em; opacity: 0.8; }}
-        .module {{ background: white; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); overflow: hidden; }}
-        .module-header {{ background: #3498db; color: white; padding: 15px 20px; font-size: 1.2em; font-weight: bold; }}
+        body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: var(--text); background: var(--bg); transition: background 0.3s ease, color 0.3s ease; }}
+        a {{ color: var(--primary); text-decoration: none; transition: opacity 0.2s ease; }}
+        a:hover {{ opacity: 0.8; }}
+
+        /* Navigation */
+        nav {{ position: sticky; top: 0; background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%); color: white; padding: 12px 20px; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }}
+        .nav-content {{ max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 20px; }}
+        .nav-brand {{ font-size: 1.2em; font-weight: bold; display: flex; align-items: center; gap: 8px; }}
+        .nav-brand img {{ width: 28px; height: 28px; }}
+        .nav-links {{ display: flex; gap: 15px; flex-wrap: wrap; }}
+        .nav-links a {{ color: white; font-size: 0.9em; padding: 4px 8px; border-radius: 4px; transition: background 0.2s ease; }}
+        .nav-links a:hover {{ background: rgba(255,255,255,0.2); opacity: 1; }}
+        .nav-actions {{ display: flex; gap: 10px; align-items: center; }}
+        .btn {{ padding: 8px 16px; border-radius: 20px; font-size: 0.9em; cursor: pointer; border: none; transition: all 0.2s ease; }}
+        .btn-primary {{ background: white; color: var(--primary-dark); }}
+        .btn-primary:hover {{ transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }}
+        .btn-icon {{ background: rgba(255,255,255,0.2); color: white; width: 36px; height: 36px; padding: 0; display: flex; align-items: center; justify-content: center; font-size: 1.2em; }}
+
+        /* Layout */
+        .layout {{ display: flex; max-width: 1400px; margin: 0 auto; min-height: calc(100vh - 60px); }}
+        aside {{ width: 220px; padding: 20px; position: sticky; top: 60px; height: calc(100vh - 60px); overflow-y: auto; background: var(--bg-card); border-right: 1px solid var(--border); transition: background 0.3s ease; }}
+        main {{ flex: 1; padding: 20px 30px; }}
+
+        /* Sidebar */
+        .sidebar-title {{ font-size: 0.85em; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 15px; }}
+        .sidebar-nav {{ list-style: none; }}
+        .sidebar-nav li {{ margin-bottom: 8px; }}
+        .sidebar-nav a {{ color: var(--text); font-size: 0.9em; display: block; padding: 6px 10px; border-radius: 6px; transition: all 0.2s ease; }}
+        .sidebar-nav a:hover {{ background: var(--hover); color: var(--primary); }}
+        .progress-box {{ margin-top: 20px; padding: 15px; background: var(--hover); border-radius: 8px; }}
+        .progress-label {{ font-size: 0.8em; color: var(--text-muted); margin-bottom: 8px; }}
+        .progress-bar {{ height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }}
+        .progress-fill {{ height: 100%; background: linear-gradient(90deg, var(--primary) 0%, #2ecc71 100%); width: 100%; }}
+
+        /* Hero */
+        .hero {{ background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%); color: white; padding: 40px 30px; border-radius: 12px; margin-bottom: 25px; }}
+        .hero h1 {{ font-size: 2.2em; margin-bottom: 8px; }}
+        .hero p {{ opacity: 0.9; margin-bottom: 20px; }}
+        .stats {{ display: flex; gap: 25px; flex-wrap: wrap; }}
+        .stat {{ background: rgba(255,255,255,0.15); padding: 15px 25px; border-radius: 8px; text-align: center; min-width: 100px; transition: transform 0.2s ease; }}
+        .stat:hover {{ transform: translateY(-2px); }}
+        .stat-value {{ font-size: 2em; font-weight: bold; }}
+        .stat-label {{ font-size: 0.85em; opacity: 0.8; }}
+
+        /* Search */
+        .search {{ margin-bottom: 25px; position: relative; }}
+        .search input {{ width: 100%; padding: 14px 20px 14px 45px; font-size: 1em; border: 2px solid var(--border); border-radius: 25px; outline: none; background: var(--bg-card); color: var(--text); transition: all 0.2s ease; }}
+        .search input:focus {{ border-color: var(--primary); box-shadow: 0 0 0 3px rgba(52,152,219,0.2); }}
+        .search-icon {{ position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }}
+
+        /* Modules */
+        .modules {{ display: flex; flex-direction: column; gap: 20px; }}
+        article {{ background: var(--bg-card); border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); overflow: hidden; transition: all 0.3s ease; }}
+        article:hover {{ box-shadow: 0 4px 16px rgba(0,0,0,0.12); }}
+        details {{ }}
+        summary {{ background: linear-gradient(135deg, var(--primary) 0%, #5dade2 100%); color: white; padding: 18px 25px; font-size: 1.15em; font-weight: 600; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s ease; }}
+        summary::-webkit-details-marker {{ display: none; }}
+        summary::after {{ content: '+'; font-size: 1.4em; font-weight: 300; transition: transform 0.2s ease; }}
+        details[open] summary::after {{ content: '-'; }}
+        summary:hover {{ filter: brightness(1.05); }}
         .lessons {{ padding: 0; }}
-        .lesson {{ padding: 15px 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }}
+        .lesson {{ padding: 16px 25px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; transition: background 0.2s ease; }}
         .lesson:last-child {{ border-bottom: none; }}
-        .lesson:hover {{ background: #f8f9fa; }}
+        .lesson:hover {{ background: var(--hover); }}
+        .lesson-link {{ display: flex; align-items: center; gap: 12px; color: var(--text); flex: 1; }}
+        .lesson-num {{ color: var(--primary); font-weight: bold; font-size: 0.95em; min-width: 35px; }}
         .lesson-title {{ font-weight: 500; }}
-        .lesson-num {{ color: #3498db; font-weight: bold; margin-right: 10px; }}
-        .lesson-meta {{ display: flex; gap: 15px; font-size: 0.9em; color: #666; }}
-        .badge {{ background: #ecf0f1; padding: 3px 10px; border-radius: 12px; }}
-        footer {{ text-align: center; padding: 20px; color: #666; font-size: 0.9em; }}
-        .search {{ margin-bottom: 20px; }}
-        .search input {{ width: 100%; padding: 12px 20px; font-size: 1em; border: 2px solid #ddd; border-radius: 25px; outline: none; }}
-        .search input:focus {{ border-color: #3498db; }}
+        .lesson-meta {{ display: flex; gap: 12px; font-size: 0.85em; }}
+        .badge {{ background: var(--badge-bg); color: var(--text-muted); padding: 4px 12px; border-radius: 15px; transition: all 0.2s ease; }}
+        .lesson:hover .badge {{ background: var(--primary); color: white; }}
+
+        /* Footer */
+        footer {{ text-align: center; padding: 30px 20px; color: var(--text-muted); font-size: 0.9em; border-top: 1px solid var(--border); margin-top: 30px; }}
+        footer a {{ color: var(--primary); }}
+
+        /* Responsive */
+        @media (max-width: 1024px) {{
+            aside {{ display: none; }}
+            .layout {{ display: block; }}
+            main {{ padding: 15px; }}
+        }}
+        @media (max-width: 768px) {{
+            .nav-links {{ display: none; }}
+            .hero {{ padding: 25px 20px; }}
+            .hero h1 {{ font-size: 1.6em; }}
+            .stats {{ gap: 15px; }}
+            .stat {{ padding: 12px 18px; min-width: 80px; }}
+            .stat-value {{ font-size: 1.5em; }}
+            summary {{ padding: 14px 18px; font-size: 1em; }}
+            .lesson {{ padding: 12px 18px; flex-wrap: wrap; gap: 8px; }}
+            .lesson-meta {{ width: 100%; justify-content: flex-start; }}
+        }}
+        @media (max-width: 480px) {{
+            .nav-brand span {{ display: none; }}
+            .stats {{ flex-direction: column; gap: 10px; }}
+            .stat {{ display: flex; justify-content: space-between; align-items: center; text-align: left; }}
+        }}
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Data Science with Python</h1>
-            <p>BSc Course - Complete Index</p>
-            <div class="stats">
-                <div class="stat"><div class="stat-value">48</div><div class="stat-label">Lessons</div></div>
-                <div class="stat"><div class="stat-value">{total_slides}</div><div class="stat-label">Slides</div></div>
-                <div class="stat"><div class="stat-value">{total_charts}</div><div class="stat-label">Charts</div></div>
-                <div class="stat"><div class="stat-value">10</div><div class="stat-label">Modules</div></div>
+    <nav aria-label="Main navigation">
+        <div class="nav-content">
+            <div class="nav-brand">
+                <span>Data Science with Python</span>
             </div>
-        </header>
-
-        <div class="search">
-            <input type="text" id="searchInput" placeholder="Search lessons..." onkeyup="filterLessons()">
+            <div class="nav-links" role="navigation">
+                <a href="#mod-1">Fundamentals</a>
+                <a href="#mod-2">Data</a>
+                <a href="#mod-3">Stats</a>
+                <a href="#mod-4">Regression</a>
+                <a href="#mod-5">Classification</a>
+                <a href="#mod-6">Unsupervised</a>
+                <a href="#mod-7">Deep Learning</a>
+                <a href="#mod-8">NLP</a>
+                <a href="#mod-9">Deploy</a>
+                <a href="#mod-10">Capstone</a>
+            </div>
+            <div class="nav-actions">
+                <a href="DataScience_3_Complete.pdf" class="btn btn-primary" aria-label="Download complete PDF">Download PDF</a>
+                <button class="btn btn-icon" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark/light mode">&#9790;</button>
+            </div>
         </div>
+    </nav>
+
+    <div class="layout">
+        <aside aria-label="Module navigation">
+            <div class="sidebar-title">Modules</div>
+            <ul class="sidebar-nav">
 '''
 
-    # Generate modules
+    # Sidebar module links
+    for mod_num, (mod_name, _) in MODULES.items():
+        short_name = mod_name.split(':')[-1].strip() if ':' in mod_name else mod_name
+        html += f'                <li><a href="#mod-{mod_num}">M{mod_num}: {short_name}</a></li>\n'
+
+    html += f'''            </ul>
+            <div class="progress-box">
+                <div class="progress-label">Course Progress</div>
+                <div class="progress-bar"><div class="progress-fill"></div></div>
+                <div style="font-size:0.9em; margin-top:8px; font-weight:600;">48 Lessons Complete</div>
+            </div>
+        </aside>
+
+        <main role="main">
+            <header class="hero">
+                <h1>Data Science with Python</h1>
+                <p>BSc Course - Complete Index</p>
+                <div class="stats">
+                    <div class="stat"><div class="stat-value">48</div><div class="stat-label">Lessons</div></div>
+                    <div class="stat"><div class="stat-value">{total_slides}</div><div class="stat-label">Slides</div></div>
+                    <div class="stat"><div class="stat-value">{total_charts}</div><div class="stat-label">Charts</div></div>
+                    <div class="stat"><div class="stat-value">10</div><div class="stat-label">Modules</div></div>
+                </div>
+            </header>
+
+            <div class="search">
+                <span class="search-icon">&#128269;</span>
+                <input type="text" id="searchInput" placeholder="Search lessons..." onkeyup="filterLessons()" aria-label="Search lessons">
+            </div>
+
+            <section class="modules" aria-label="Course modules">
+'''
+
+    # Generate modules with collapsible details
     for mod_num, (mod_name, lesson_range) in MODULES.items():
         mod_lessons = [l for l in lessons if l['num'] in lesson_range]
-        html += f'''
-        <div class="module">
-            <div class="module-header">Module {mod_num}: {mod_name}</div>
-            <div class="lessons">
+        html += f'''                <article id="mod-{mod_num}">
+                    <details open>
+                        <summary id="module-{mod_num}-heading">Module {mod_num}: {mod_name}</summary>
+                        <div class="lessons" role="list" aria-labelledby="module-{mod_num}-heading">
 '''
         for lesson in mod_lessons:
-            html += f'''                <div class="lesson" data-title="{lesson['title'].lower()}">
-                    <div class="lesson-title">
-                        <span class="lesson-num">L{lesson['num']:02d}</span>
-                        {lesson['title']}
-                    </div>
-                    <div class="lesson-meta">
-                        <span class="badge">{lesson['slides']} slides</span>
-                        <span class="badge">{lesson['charts']} charts</span>
-                    </div>
-                </div>
+            pdf_path = f"{lesson['folder']}/{lesson['folder']}.pdf"
+            html += f'''                            <div class="lesson" data-title="{lesson['title'].lower()}" role="listitem">
+                                <a href="{pdf_path}" target="_blank" class="lesson-link" aria-label="Open {lesson['title']} PDF">
+                                    <span class="lesson-num">L{lesson['num']:02d}</span>
+                                    <span class="lesson-title">{lesson['title']}</span>
+                                </a>
+                                <div class="lesson-meta">
+                                    <span class="badge">{lesson['slides']} slides</span>
+                                    <span class="badge">{lesson['charts']} charts</span>
+                                </div>
+                            </div>
 '''
-        html += '''            </div>
-        </div>
+        html += '''                        </div>
+                    </details>
+                </article>
 '''
 
-    html += f'''
-        <footer>
-            <p>Generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}</p>
-            <p><a href="DataScience_3_Complete.pdf">Download Complete PDF (8.2 MB)</a></p>
-        </footer>
+    html += f'''            </section>
+        </main>
     </div>
+
+    <footer>
+        <p>Generated: {timestamp} | <a href="DataScience_3_Complete.pdf">Download Complete PDF (8.2 MB)</a></p>
+        <p>Data Science with Python - BSc Course</p>
+    </footer>
 
     <script>
         function filterLessons() {{
@@ -222,7 +372,32 @@ def generate_html(lessons):
                 const title = lesson.dataset.title;
                 lesson.style.display = title.includes(query) ? 'flex' : 'none';
             }});
+            // Show all modules when searching
+            if (query) {{
+                document.querySelectorAll('details').forEach(d => d.open = true);
+            }}
         }}
+
+        function toggleTheme() {{
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            body.setAttribute('data-theme', newTheme === 'dark' ? 'dark' : '');
+            localStorage.setItem('theme', newTheme);
+            // Update button icon
+            const btn = document.querySelector('.btn-icon');
+            btn.innerHTML = newTheme === 'dark' ? '&#9788;' : '&#9790;';
+        }}
+
+        // Load saved theme
+        (function() {{
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {{
+                document.body.setAttribute('data-theme', 'dark');
+                const btn = document.querySelector('.btn-icon');
+                if (btn) btn.innerHTML = '&#9788;';
+            }}
+        }})();
     </script>
 </body>
 </html>
