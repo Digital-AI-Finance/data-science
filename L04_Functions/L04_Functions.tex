@@ -1,0 +1,166 @@
+\documentclass[8pt,aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{adjustbox}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Color definitions
+\definecolor{mlblue}{RGB}{0,102,204}
+\definecolor{mlpurple}{RGB}{51,51,178}
+\definecolor{mllavender}{RGB}{173,173,224}
+\definecolor{mllavender2}{RGB}{193,193,232}
+\definecolor{mllavender3}{RGB}{204,204,235}
+\definecolor{mllavender4}{RGB}{214,214,239}
+\definecolor{mlorange}{RGB}{255, 127, 14}
+\definecolor{mlgreen}{RGB}{44, 160, 44}
+\definecolor{mlred}{RGB}{214, 39, 40}
+
+\setbeamercolor{palette primary}{bg=mllavender3,fg=mlpurple}
+\setbeamercolor{palette secondary}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{palette tertiary}{bg=mllavender,fg=white}
+\setbeamercolor{palette quaternary}{bg=mlpurple,fg=white}
+\setbeamercolor{structure}{fg=mlpurple}
+\setbeamercolor{frametitle}{fg=mlpurple,bg=mllavender3}
+\setbeamercolor{block title}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{block body}{bg=mllavender4,fg=black}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamersize{text margin left=5mm,text margin right=5mm}
+
+\newcommand{\bottomnote}[1]{%
+\vfill\vspace{-2mm}
+\textcolor{mllavender2}{\rule{\textwidth}{0.4pt}}
+\vspace{1mm}\footnotesize\textbf{#1}}
+
+
+\title{Lesson 04: Functions}
+\subtitle{Data Science with Python -- BSc Course}
+\author{Data Science Program}
+\date{45 Minutes}
+
+\begin{document}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+\begin{frame}[t]{Learning Objectives}
+\textbf{After this lesson, you will be able to:}
+\begin{itemize}
+\item Define and call functions with parameters
+\item Use return statements to output values
+\item Understand variable scope (local vs global)
+\item Write docstrings for documentation
+\end{itemize}
+
+\vspace{1em}
+\textbf{Finance Application:} Create reusable functions for return calculations and risk metrics.
+
+\bottomnote{Functions are building blocks of modular code}
+\end{frame}
+
+\begin{frame}[t]{Function Anatomy}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{01_function_anatomy/chart.pdf}
+\end{center}
+
+\bottomnote{def keyword, name, parameters, colon, indented body, return}
+\end{frame}
+
+\begin{frame}[t]{Parameter Passing}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{02_parameter_passing/chart.pdf}
+\end{center}
+
+\bottomnote{Python passes object references -- mutable objects can change}
+\end{frame}
+
+\begin{frame}[t]{Return Values}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{03_return_flowchart/chart.pdf}
+\end{center}
+
+\bottomnote{Functions without return statement return None}
+\end{frame}
+
+\begin{frame}[t]{Variable Scope}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{04_scope_diagram/chart.pdf}
+\end{center}
+
+\bottomnote{Local variables are destroyed when function ends}
+\end{frame}
+
+\begin{frame}[t]{Docstrings}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{05_docstring_format/chart.pdf}
+\end{center}
+
+\bottomnote{Access docstring with help(function) or function.\_\_doc\_\_}
+\end{frame}
+
+\begin{frame}[t]{Function Call Stack}
+\begin{center}
+\includegraphics[width=0.7\textwidth]{06_call_stack/chart.pdf}
+\end{center}
+
+\bottomnote{Stack grows with nested calls, shrinks as functions return}
+\end{frame}
+
+\begin{frame}[t]{Pure vs Impure Functions}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{07_pure_vs_impure/chart.pdf}
+\end{center}
+
+\bottomnote{Pure functions are easier to test and debug}
+\end{frame}
+
+\begin{frame}[t]{Finance Functions Library}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{08_finance_functions/chart.pdf}
+\end{center}
+
+\bottomnote{Build your own library of financial calculation functions}
+\end{frame}
+
+\begin{frame}[t]{Hands-on Exercise (25 min)}
+\textbf{Build a finance functions library:}
+
+\begin{enumerate}
+\item \texttt{calculate\_return(buy, sell)} -- percentage return
+
+\item \texttt{annualize\_return(daily\_ret, days=252)} -- annualized
+
+\item \texttt{calculate\_volatility(returns)} -- standard deviation
+
+\item \texttt{sharpe\_ratio(returns, rf=0.02)} -- risk-adjusted return
+
+\item Test each function with sample data
+
+\item Add docstrings to all functions
+\end{enumerate}
+
+\bottomnote{These functions will be used throughout the course}
+\end{frame}
+
+\begin{frame}[t]{Lesson Summary}
+\textbf{Key Takeaways:}
+\begin{itemize}
+\item Functions encapsulate reusable logic
+\item Parameters pass data in, return sends data out
+\item Local scope: variables exist only inside function
+\item Docstrings document function purpose and usage
+\item Pure functions are predictable and testable
+\end{itemize}
+
+\vspace{1em}
+\textbf{Next Lesson:} DataFrames Introduction
+
+\bottomnote{Functions + pandas = powerful financial analysis}
+\end{frame}
+
+\end{document}

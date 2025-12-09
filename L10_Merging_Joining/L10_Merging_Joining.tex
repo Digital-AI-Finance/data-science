@@ -1,0 +1,125 @@
+\documentclass[8pt,aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+
+\definecolor{mlpurple}{RGB}{51,51,178}
+\definecolor{mllavender}{RGB}{173,173,224}
+\definecolor{mllavender2}{RGB}{193,193,232}
+\definecolor{mllavender3}{RGB}{204,204,235}
+\definecolor{mllavender4}{RGB}{214,214,239}
+\definecolor{mlorange}{RGB}{255, 127, 14}
+\definecolor{mlgreen}{RGB}{44, 160, 44}
+
+\setbeamercolor{palette primary}{bg=mllavender3,fg=mlpurple}
+\setbeamercolor{structure}{fg=mlpurple}
+\setbeamercolor{frametitle}{fg=mlpurple,bg=mllavender3}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamersize{text margin left=5mm,text margin right=5mm}
+
+\newcommand{\bottomnote}[1]{\vfill\footnotesize\textbf{#1}}
+
+
+\title{Lesson 10: Merging and Joining}
+\subtitle{Data Science with Python -- BSc Course}
+\date{45 Minutes}
+
+\begin{document}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+
+\begin{frame}[t]{Learning Objectives}
+\textbf{After this lesson, you will be able to:}
+\begin{itemize}
+\item pd.concat() for stacking
+\item pd.merge() for SQL-style joins
+\item Join types: inner, outer, left, right
+\item Handling key columns
+\end{itemize}
+\bottomnote{Finance application: Stock data processing and analysis}
+\end{frame}
+
+
+\begin{frame}[t]{Concat}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{01_concat/chart.pdf}
+\end{center}
+\bottomnote{Key concept for financial data analysis}
+\end{frame}
+
+
+\begin{frame}[t]{Merge Types}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{02_merge_types/chart.pdf}
+\end{center}
+\bottomnote{Key concept for financial data analysis}
+\end{frame}
+
+
+\begin{frame}[t]{03 Join Comparison}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{03_join_comparison/chart.pdf}
+\end{center}
+\bottomnote{Key concept for financial data analysis}
+\end{frame}
+
+
+\begin{frame}[t]{04 Merge Workflow}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{04_merge_workflow/chart.pdf}
+\end{center}
+\bottomnote{Key concept for financial data analysis}
+\end{frame}
+
+
+\begin{frame}[t]{05 Key Matching}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{05_key_matching/chart.pdf}
+\end{center}
+\bottomnote{Key concept for financial data analysis}
+\end{frame}
+
+
+\begin{frame}[t]{06 Finance Merge}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{06_finance_merge/chart.pdf}
+\end{center}
+\bottomnote{Key concept for financial data analysis}
+\end{frame}
+
+
+\begin{frame}[t]{07 Multi Source}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{07_multi_source/chart.pdf}
+\end{center}
+\bottomnote{Key concept for financial data analysis}
+\end{frame}
+
+
+\begin{frame}[t]{08 Troubleshooting}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{08_troubleshooting/chart.pdf}
+\end{center}
+\bottomnote{Key concept for financial data analysis}
+\end{frame}
+
+
+\begin{frame}[t]{Lesson Summary}
+\textbf{Key Takeaways:}
+\begin{itemize}
+\item pd.concat() for stacking
+\item pd.merge() for SQL-style joins
+\item Join types: inner, outer, left, right
+\item Handling key columns
+\end{itemize}
+
+\vspace{1em}
+\textbf{Practice:} Apply these concepts to the stock price dataset.
+\end{frame}
+
+\end{document}

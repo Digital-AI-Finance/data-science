@@ -1,0 +1,283 @@
+\documentclass[8pt,aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{adjustbox}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Color definitions
+\definecolor{mlblue}{RGB}{0,102,204}
+\definecolor{mlpurple}{RGB}{51,51,178}
+\definecolor{mllavender}{RGB}{173,173,224}
+\definecolor{mllavender2}{RGB}{193,193,232}
+\definecolor{mllavender3}{RGB}{204,204,235}
+\definecolor{mllavender4}{RGB}{214,214,239}
+\definecolor{mlorange}{RGB}{255, 127, 14}
+\definecolor{mlgreen}{RGB}{44, 160, 44}
+\definecolor{mlred}{RGB}{214, 39, 40}
+
+\setbeamercolor{palette primary}{bg=mllavender3,fg=mlpurple}
+\setbeamercolor{palette secondary}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{palette tertiary}{bg=mllavender,fg=white}
+\setbeamercolor{palette quaternary}{bg=mlpurple,fg=white}
+\setbeamercolor{structure}{fg=mlpurple}
+\setbeamercolor{frametitle}{fg=mlpurple,bg=mllavender3}
+\setbeamercolor{block title}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{block body}{bg=mllavender4,fg=black}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamersize{text margin left=5mm,text margin right=5mm}
+
+\newcommand{\bottomnote}[1]{%
+\vfill\vspace{-2mm}
+\textcolor{mllavender2}{\rule{\textwidth}{0.4pt}}
+\vspace{1mm}\footnotesize\textbf{#1}}
+
+
+\title{Lesson 02: Data Structures}
+\subtitle{Data Science with Python -- BSc Course}
+\author{Data Science Program}
+\date{45 Minutes}
+
+\begin{document}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+\begin{frame}[t]{Learning Objectives}
+\textbf{After this lesson, you will be able to:}
+\begin{itemize}
+\item Create and manipulate Python lists
+\item Access elements using indexing and slicing
+\item Build dictionaries for key-value data storage
+\item Apply list comprehensions for efficient data processing
+\end{itemize}
+
+\vspace{1em}
+\textbf{Finance Application:} Store portfolio holdings as lists and dictionaries.
+
+\bottomnote{Data structures are containers for organizing information}
+\end{frame}
+
+\begin{frame}[t]{List Indexing}
+\begin{columns}[T]
+\column{0.55\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{01_list_indexing/chart.pdf}
+\end{center}
+
+\column{0.42\textwidth}
+\textbf{Creating Lists:}\\
+\texttt{prices = [185, 190, 188, 195]}
+
+\vspace{0.5em}
+\textbf{Accessing Elements:}\\
+\texttt{prices[0]} $\rightarrow$ \texttt{185} (first)\\
+\texttt{prices[-1]} $\rightarrow$ \texttt{195} (last)\\
+\texttt{prices[1]} $\rightarrow$ \texttt{190} (second)
+
+\vspace{0.5em}
+\textbf{Remember:}\\
+Python indexing starts at 0!
+\end{columns}
+
+\bottomnote{Negative indices count from the end: -1 is last element}
+\end{frame}
+
+\begin{frame}[t]{Slicing Notation}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{02_slicing_notation/chart.pdf}
+\end{center}
+
+\column{0.48\textwidth}
+\textbf{Slice Syntax:} \texttt{list[start:end:step]}
+
+\vspace{0.5em}
+\texttt{prices = [185, 190, 188, 195, 182]}
+
+\vspace{0.3em}
+\texttt{prices[1:4]} $\rightarrow$ \texttt{[190, 188, 195]}\\
+\texttt{prices[:3]} $\rightarrow$ \texttt{[185, 190, 188]}\\
+\texttt{prices[2:]} $\rightarrow$ \texttt{[188, 195, 182]}\\
+\texttt{prices[::2]} $\rightarrow$ \texttt{[185, 188, 182]}
+
+\vspace{0.5em}
+\textbf{Key:} End index is exclusive
+\end{columns}
+
+\bottomnote{Slicing creates a new list -- original unchanged}
+\end{frame}
+
+\begin{frame}[t]{Dictionary Structure}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{03_dictionary_structure/chart.pdf}
+\end{center}
+
+\column{0.48\textwidth}
+\textbf{Key-Value Pairs:}
+
+\vspace{0.3em}
+\texttt{portfolio = \{}\\
+\texttt{~~~~"AAPL": 50,}\\
+\texttt{~~~~"MSFT": 30,}\\
+\texttt{~~~~"GOOGL": 20}\\
+\texttt{\}}
+
+\vspace{0.5em}
+\textbf{Access by Key:}\\
+\texttt{portfolio["AAPL"]} $\rightarrow$ \texttt{50}
+
+\vspace{0.5em}
+\texttt{portfolio.keys()}\\
+\texttt{portfolio.values()}
+\end{columns}
+
+\bottomnote{Dictionaries provide O(1) lookup -- very fast access}
+\end{frame}
+
+\begin{frame}[t]{Nested Data Structures}
+\begin{center}
+\includegraphics[width=0.7\textwidth]{04_nested_structures/chart.pdf}
+\end{center}
+
+\textbf{Real-World Portfolio Structure:}\\
+\texttt{holdings = \{"AAPL": \{"shares": 50, "price": 185.5\}, ....\}}
+
+\bottomnote{Nested structures model complex financial data}
+\end{frame}
+
+\begin{frame}[t]{List Methods}
+\begin{columns}[T]
+\column{0.55\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{05_list_methods/chart.pdf}
+\end{center}
+
+\column{0.42\textwidth}
+\textbf{Adding Elements:}\\
+\texttt{prices.append(200)}\\
+\texttt{prices.insert(0, 180)}
+
+\vspace{0.5em}
+\textbf{Removing:}\\
+\texttt{prices.remove(188)}\\
+\texttt{prices.pop()} -- removes last
+
+\vspace{0.5em}
+\textbf{Sorting:}\\
+\texttt{prices.sort()}\\
+\texttt{prices.reverse()}
+\end{columns}
+
+\bottomnote{Methods modify the list in-place (except sorted())}
+\end{frame}
+
+\begin{frame}[t]{Portfolio as Dictionary}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{06_portfolio_dict/chart.pdf}
+\end{center}
+
+\column{0.48\textwidth}
+\textbf{Portfolio Dictionary:}
+
+\texttt{prices = \{}\\
+\texttt{~~~~"AAPL": 185.50,}\\
+\texttt{~~~~"MSFT": 378.20,}\\
+\texttt{~~~~"GOOGL": 141.80}\\
+\texttt{\}}
+
+\vspace{0.5em}
+\textbf{Calculate Total:}\\
+\texttt{total = sum(prices.values())}
+
+\vspace{0.5em}
+\textbf{Check Existence:}\\
+\texttt{"AAPL" in prices} $\rightarrow$ \texttt{True}
+\end{columns}
+
+\bottomnote{Dictionaries are ideal for ticker-to-data mappings}
+\end{frame}
+
+\begin{frame}[t]{List Comprehension}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{07_list_comprehension/chart.pdf}
+\end{center}
+
+\column{0.48\textwidth}
+\textbf{Traditional Loop:}\\
+\texttt{returns = []}\\
+\texttt{for p in prices:}\\
+\texttt{~~~~returns.append(p * 1.05)}
+
+\vspace{0.5em}
+\textbf{List Comprehension:}\\
+\texttt{returns = [p * 1.05 for p in prices]}
+
+\vspace{0.5em}
+\textbf{With Condition:}\\
+\texttt{high = [p for p in prices if p > 190]}
+\end{columns}
+
+\bottomnote{Comprehensions are more Pythonic and often faster}
+\end{frame}
+
+\begin{frame}[t]{Choosing the Right Structure}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{08_structure_selection/chart.pdf}
+\end{center}
+
+\bottomnote{Lists for sequences, dicts for lookups, sets for uniqueness}
+\end{frame}
+
+\begin{frame}[t]{Hands-on Exercise (25 min)}
+\textbf{Build a portfolio tracker:}
+
+\begin{enumerate}
+\item Create a list of stock tickers:\\
+\texttt{tickers = ["AAPL", "MSFT", "GOOGL", "AMZN"]}
+
+\item Create a dictionary with shares owned:\\
+\texttt{shares = \{"AAPL": 50, "MSFT": 30, ...\}}
+
+\item Create a dictionary with current prices
+
+\item Calculate portfolio value using list comprehension:\\
+\texttt{values = [shares[t] * prices[t] for t in tickers]}
+
+\item Find total portfolio value: \texttt{sum(values)}
+
+\item Filter stocks worth more than \$5000
+\end{enumerate}
+
+\bottomnote{Save your work -- we'll add more features next lesson}
+\end{frame}
+
+\begin{frame}[t]{Lesson Summary}
+\textbf{Key Takeaways:}
+\begin{itemize}
+\item Lists store ordered sequences (accessed by index)
+\item Dictionaries store key-value pairs (accessed by key)
+\item Slicing extracts portions: \texttt{list[start:end]}
+\item List comprehensions create lists efficiently
+\item Choose structure based on access pattern
+\end{itemize}
+
+\vspace{1em}
+\textbf{Next Lesson:} Control Flow (if/else, loops)
+
+\bottomnote{Data structures + control flow = programming logic}
+\end{frame}
+
+\end{document}

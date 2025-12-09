@@ -1,0 +1,307 @@
+\documentclass[8pt,aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{adjustbox}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Color definitions
+\definecolor{mlblue}{RGB}{0,102,204}
+\definecolor{mlpurple}{RGB}{51,51,178}
+\definecolor{mllavender}{RGB}{173,173,224}
+\definecolor{mllavender2}{RGB}{193,193,232}
+\definecolor{mllavender3}{RGB}{204,204,235}
+\definecolor{mllavender4}{RGB}{214,214,239}
+\definecolor{mlorange}{RGB}{255, 127, 14}
+\definecolor{mlgreen}{RGB}{44, 160, 44}
+\definecolor{mlred}{RGB}{214, 39, 40}
+
+\setbeamercolor{palette primary}{bg=mllavender3,fg=mlpurple}
+\setbeamercolor{palette secondary}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{palette tertiary}{bg=mllavender,fg=white}
+\setbeamercolor{palette quaternary}{bg=mlpurple,fg=white}
+\setbeamercolor{structure}{fg=mlpurple}
+\setbeamercolor{frametitle}{fg=mlpurple,bg=mllavender3}
+\setbeamercolor{block title}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{block body}{bg=mllavender4,fg=black}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamersize{text margin left=5mm,text margin right=5mm}
+
+\newcommand{\bottomnote}[1]{%
+\vfill\vspace{-2mm}
+\textcolor{mllavender2}{\rule{\textwidth}{0.4pt}}
+\vspace{1mm}\footnotesize\textbf{#1}}
+
+\title{Lesson 01: Python Setup}
+\subtitle{Data Science with Python -- BSc Course}
+\author{Data Science Program}
+\date{45 Minutes}
+
+\begin{document}
+
+% Title slide
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+% Learning Objectives
+\begin{frame}[t]{Learning Objectives}
+\textbf{After this lesson, you will be able to:}
+\begin{itemize}
+\item Install Anaconda and launch Jupyter Notebook
+\item Create and execute Python code cells
+\item Understand and use basic data types (int, float, str, bool)
+\item Store stock prices and financial data in variables
+\end{itemize}
+
+\vspace{1em}
+\textbf{Finance Application:} Store and manipulate stock prices using Python variables.
+
+\bottomnote{Foundation lesson -- everything builds on these basics}
+\end{frame}
+
+% Jupyter Interface
+\begin{frame}[t]{The Jupyter Notebook Environment}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Why Jupyter?}
+\begin{itemize}
+\item Interactive code execution
+\item Mix code, output, and documentation
+\item Industry standard for data science
+\item Perfect for financial analysis
+\end{itemize}
+
+\vspace{0.5em}
+\textbf{Getting Started:}
+\begin{enumerate}
+\item Install Anaconda from anaconda.com
+\item Launch Jupyter Notebook
+\item Create New $\rightarrow$ Python 3
+\end{enumerate}
+
+\column{0.48\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{01_jupyter_interface/chart.pdf}
+\end{center}
+\end{columns}
+
+\bottomnote{Jupyter = Julia + Python + R -- supports multiple languages}
+\end{frame}
+
+% Data Types
+\begin{frame}[t]{Python Data Types}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{02_data_types_hierarchy/chart.pdf}
+\end{center}
+
+\column{0.48\textwidth}
+\textbf{Four Basic Types:}
+
+\vspace{0.3em}
+\texttt{int} -- Integers (whole numbers)\\
+\texttt{~~~price\_shares = 100}
+
+\vspace{0.3em}
+\texttt{float} -- Decimals\\
+\texttt{~~~stock\_price = 185.50}
+
+\vspace{0.3em}
+\texttt{str} -- Text strings\\
+\texttt{~~~ticker = "AAPL"}
+
+\vspace{0.3em}
+\texttt{bool} -- True/False\\
+\texttt{~~~is\_profitable = True}
+\end{columns}
+
+\bottomnote{Use type(variable) to check any variable's type}
+\end{frame}
+
+% Variable Assignment
+\begin{frame}[t]{Variable Assignment}
+\begin{center}
+\includegraphics[width=0.7\textwidth]{03_variable_assignment/chart.pdf}
+\end{center}
+
+\textbf{Key Rules:}
+\begin{itemize}
+\item Variables store values in memory
+\item Names must start with letter or underscore
+\item Case sensitive: \texttt{Price} $\neq$ \texttt{price}
+\item Use descriptive names: \texttt{aapl\_price} not \texttt{x}
+\end{itemize}
+
+\bottomnote{Python uses dynamic typing -- no need to declare types}
+\end{frame}
+
+% Integer vs Float
+\begin{frame}[t]{Integers vs Floats in Finance}
+\begin{columns}[T]
+\column{0.55\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{04_int_vs_float/chart.pdf}
+\end{center}
+
+\column{0.42\textwidth}
+\textbf{When to use integers:}
+\begin{itemize}
+\item Number of shares: \texttt{shares = 100}
+\item Trading days: \texttt{days = 252}
+\item Position count: \texttt{positions = 5}
+\end{itemize}
+
+\vspace{0.5em}
+\textbf{When to use floats:}
+\begin{itemize}
+\item Stock prices: \texttt{price = 185.50}
+\item Returns: \texttt{ret = 0.0523}
+\item Percentages: \texttt{pct = 5.23}
+\end{itemize}
+\end{columns}
+
+\bottomnote{Division always returns float: 10 / 3 = 3.333...}
+\end{frame}
+
+% String Operations
+\begin{frame}[t]{String Operations for Finance}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{05_string_operations/chart.pdf}
+\end{center}
+
+\column{0.48\textwidth}
+\textbf{Common String Operations:}
+
+\vspace{0.3em}
+\texttt{ticker = "AAPL"}\\
+\texttt{ticker.upper()} $\rightarrow$ \texttt{"AAPL"}\\
+\texttt{ticker.lower()} $\rightarrow$ \texttt{"aapl"}
+
+\vspace{0.5em}
+\textbf{String Formatting:}\\
+\texttt{f"Price: \$\{price\}"}
+
+\vspace{0.5em}
+\textbf{Concatenation:}\\
+\texttt{"NASDAQ:" + ticker}
+\end{columns}
+
+\bottomnote{F-strings (f"...") are the modern way to format strings}
+\end{frame}
+
+% Boolean Logic
+\begin{frame}[t]{Boolean Logic for Trading Decisions}
+\begin{columns}[T]
+\column{0.55\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{06_boolean_logic/chart.pdf}
+\end{center}
+
+\column{0.42\textwidth}
+\textbf{Comparison Operators:}
+\begin{itemize}
+\item \texttt{>} greater than
+\item \texttt{<} less than
+\item \texttt{>=} greater or equal
+\item \texttt{==} equal to
+\item \texttt{!=} not equal
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Example:}\\
+\texttt{price > 200} $\rightarrow$ \texttt{True/False}
+\end{columns}
+
+\bottomnote{Booleans are essential for trading rule logic}
+\end{frame}
+
+% Type Conversion
+\begin{frame}[t]{Type Conversion}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{07_type_conversion/chart.pdf}
+\end{center}
+
+\column{0.48\textwidth}
+\textbf{Converting Between Types:}
+
+\vspace{0.3em}
+\texttt{int("100")} $\rightarrow$ \texttt{100}\\
+\texttt{float("185.5")} $\rightarrow$ \texttt{185.5}\\
+\texttt{str(185.5)} $\rightarrow$ \texttt{"185.5"}\\
+\texttt{bool(1)} $\rightarrow$ \texttt{True}
+
+\vspace{0.5em}
+\textbf{Finance Use Case:}\\
+Reading prices from CSV files\\
+(data comes as strings)
+\end{columns}
+
+\bottomnote{Be careful: int("185.5") fails -- convert to float first}
+\end{frame}
+
+% Python vs Excel
+\begin{frame}[t]{Why Python Instead of Excel?}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{08_python_vs_excel/chart.pdf}
+\end{center}
+
+\bottomnote{Python scales to millions of rows; Excel struggles past 100K}
+\end{frame}
+
+% Hands-on Exercise
+\begin{frame}[t]{Hands-on Exercise (25 min)}
+\textbf{Create a Jupyter notebook and complete:}
+
+\begin{enumerate}
+\item Create variables for a stock portfolio:
+\begin{itemize}
+\item \texttt{ticker = "AAPL"} (string)
+\item \texttt{shares = 50} (integer)
+\item \texttt{buy\_price = 150.25} (float)
+\item \texttt{current\_price = 185.50} (float)
+\end{itemize}
+
+\item Calculate portfolio metrics:
+\begin{itemize}
+\item Total investment: \texttt{shares * buy\_price}
+\item Current value: \texttt{shares * current\_price}
+\item Profit: current value - investment
+\item Return \%: \texttt{(profit / investment) * 100}
+\end{itemize}
+
+\item Create a boolean: \texttt{is\_profitable = profit > 0}
+
+\item Print results using f-strings
+\end{enumerate}
+
+\bottomnote{Save your notebook -- we'll build on this next lesson}
+\end{frame}
+
+% Summary
+\begin{frame}[t]{Lesson Summary}
+\textbf{Key Takeaways:}
+\begin{itemize}
+\item Jupyter Notebook is our development environment
+\item Four basic types: \texttt{int}, \texttt{float}, \texttt{str}, \texttt{bool}
+\item Variables store values with descriptive names
+\item Type conversion needed when reading external data
+\item Python handles large datasets better than Excel
+\end{itemize}
+
+\vspace{1em}
+\textbf{Next Lesson:} Data Structures (Lists and Dictionaries)
+
+\bottomnote{Practice: Experiment with different variable types in Jupyter}
+\end{frame}
+
+\end{document}

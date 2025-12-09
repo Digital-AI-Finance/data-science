@@ -1,0 +1,169 @@
+\documentclass[8pt,aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{adjustbox}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Color definitions
+\definecolor{mlblue}{RGB}{0,102,204}
+\definecolor{mlpurple}{RGB}{51,51,178}
+\definecolor{mllavender}{RGB}{173,173,224}
+\definecolor{mllavender2}{RGB}{193,193,232}
+\definecolor{mllavender3}{RGB}{204,204,235}
+\definecolor{mllavender4}{RGB}{214,214,239}
+\definecolor{mlorange}{RGB}{255, 127, 14}
+\definecolor{mlgreen}{RGB}{44, 160, 44}
+\definecolor{mlred}{RGB}{214, 39, 40}
+
+\setbeamercolor{palette primary}{bg=mllavender3,fg=mlpurple}
+\setbeamercolor{palette secondary}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{palette tertiary}{bg=mllavender,fg=white}
+\setbeamercolor{palette quaternary}{bg=mlpurple,fg=white}
+\setbeamercolor{structure}{fg=mlpurple}
+\setbeamercolor{frametitle}{fg=mlpurple,bg=mllavender3}
+\setbeamercolor{block title}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{block body}{bg=mllavender4,fg=black}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamersize{text margin left=5mm,text margin right=5mm}
+
+\newcommand{\bottomnote}[1]{%
+\vfill\vspace{-2mm}
+\textcolor{mllavender2}{\rule{\textwidth}{0.4pt}}
+\vspace{1mm}\footnotesize\textbf{#1}}
+
+
+\title{Lesson 05: DataFrames Introduction}
+\subtitle{Data Science with Python -- BSc Course}
+\author{Data Science Program}
+\date{45 Minutes}
+
+\begin{document}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+\begin{frame}[t]{Learning Objectives}
+\textbf{After this lesson, you will be able to:}
+\begin{itemize}
+\item Import pandas and create DataFrames
+\item Load data from CSV files
+\item Explore data with head(), tail(), info(), describe()
+\item Understand DataFrame structure (index, columns, values)
+\end{itemize}
+
+\vspace{1em}
+\textbf{Finance Application:} Load and explore stock price data.
+
+\bottomnote{pandas is THE library for data manipulation in Python}
+\end{frame}
+
+\begin{frame}[t]{DataFrame Structure}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{01_dataframe_structure/chart.pdf}
+\end{center}
+
+\bottomnote{DataFrames are 2D labeled data structures}
+\end{frame}
+
+\begin{frame}[t]{Series vs DataFrame}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{02_series_vs_dataframe/chart.pdf}
+\end{center}
+
+\bottomnote{Series = 1 column; DataFrame = multiple Series}
+\end{frame}
+
+\begin{frame}[t]{Loading CSV Data}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{03_csv_loading/chart.pdf}
+\end{center}
+
+\bottomnote{pd.read\_csv() handles most CSV formats automatically}
+\end{frame}
+
+\begin{frame}[t]{Viewing Data: head() and tail()}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{04_head_tail/chart.pdf}
+\end{center}
+
+\bottomnote{Always inspect data after loading!}
+\end{frame}
+
+\begin{frame}[t]{DataFrame Info}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{05_info_breakdown/chart.pdf}
+\end{center}
+
+\bottomnote{info() reveals data types and missing values}
+\end{frame}
+
+\begin{frame}[t]{Summary Statistics}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{06_describe_stats/chart.pdf}
+\end{center}
+
+\bottomnote{describe() provides statistical summary of numeric columns}
+\end{frame}
+
+\begin{frame}[t]{Index and Columns}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{07_index_columns/chart.pdf}
+\end{center}
+
+\bottomnote{Index labels rows; columns label data fields}
+\end{frame}
+
+\begin{frame}[t]{Stock Data Example}
+\begin{center}
+\includegraphics[width=0.9\textwidth]{08_stock_example/chart.pdf}
+\end{center}
+
+\bottomnote{Financial time series are natural DataFrames}
+\end{frame}
+
+\begin{frame}[t]{Hands-on Exercise (25 min)}
+\textbf{Explore stock price data:}
+
+\begin{enumerate}
+\item Load the stock data:\\
+\texttt{df = pd.read\_csv("../datasets/stock\_prices.csv")}
+
+\item View first 10 rows: \texttt{df.head(10)}
+
+\item Check data types: \texttt{df.info()}
+
+\item Get statistics: \texttt{df.describe()}
+
+\item Access column names: \texttt{df.columns}
+
+\item Check shape: \texttt{df.shape}
+
+\item Find which stock has highest mean price
+\end{enumerate}
+
+\bottomnote{Exploration before analysis prevents costly mistakes}
+\end{frame}
+
+\begin{frame}[t]{Lesson Summary}
+\textbf{Key Takeaways:}
+\begin{itemize}
+\item pandas DataFrame is the core data structure
+\item pd.read\_csv() loads CSV files easily
+\item head()/tail() show first/last rows
+\item info() shows data types and missing values
+\item describe() provides statistical summary
+\end{itemize}
+
+\vspace{1em}
+\textbf{Next Lesson:} Selection and Filtering
+
+\bottomnote{Loading data is step 1 -- now we'll learn to slice it}
+\end{frame}
+
+\end{document}

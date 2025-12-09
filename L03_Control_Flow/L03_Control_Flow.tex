@@ -1,0 +1,255 @@
+\documentclass[8pt,aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{adjustbox}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Color definitions
+\definecolor{mlblue}{RGB}{0,102,204}
+\definecolor{mlpurple}{RGB}{51,51,178}
+\definecolor{mllavender}{RGB}{173,173,224}
+\definecolor{mllavender2}{RGB}{193,193,232}
+\definecolor{mllavender3}{RGB}{204,204,235}
+\definecolor{mllavender4}{RGB}{214,214,239}
+\definecolor{mlorange}{RGB}{255, 127, 14}
+\definecolor{mlgreen}{RGB}{44, 160, 44}
+\definecolor{mlred}{RGB}{214, 39, 40}
+
+\setbeamercolor{palette primary}{bg=mllavender3,fg=mlpurple}
+\setbeamercolor{palette secondary}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{palette tertiary}{bg=mllavender,fg=white}
+\setbeamercolor{palette quaternary}{bg=mlpurple,fg=white}
+\setbeamercolor{structure}{fg=mlpurple}
+\setbeamercolor{frametitle}{fg=mlpurple,bg=mllavender3}
+\setbeamercolor{block title}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{block body}{bg=mllavender4,fg=black}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamersize{text margin left=5mm,text margin right=5mm}
+
+\newcommand{\bottomnote}[1]{%
+\vfill\vspace{-2mm}
+\textcolor{mllavender2}{\rule{\textwidth}{0.4pt}}
+\vspace{1mm}\footnotesize\textbf{#1}}
+
+
+\title{Lesson 03: Control Flow}
+\subtitle{Data Science with Python -- BSc Course}
+\author{Data Science Program}
+\date{45 Minutes}
+
+\begin{document}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+\begin{frame}[t]{Learning Objectives}
+\textbf{After this lesson, you will be able to:}
+\begin{itemize}
+\item Write conditional statements with if/elif/else
+\item Create loops to iterate over data
+\item Implement trading rules using control flow
+\item Use break and continue for loop control
+\end{itemize}
+
+\vspace{1em}
+\textbf{Finance Application:} Implement trading signals and position sizing rules.
+
+\bottomnote{Control flow determines which code executes based on conditions}
+\end{frame}
+
+\begin{frame}[t]{If-Else Statements}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{01_if_else_flowchart/chart.pdf}
+\end{center}
+
+\column{0.48\textwidth}
+\textbf{Basic Structure:}
+
+\texttt{if price > 200:}\\
+\texttt{~~~~signal = "SELL"}\\
+\texttt{elif price < 150:}\\
+\texttt{~~~~signal = "BUY"}\\
+\texttt{else:}\\
+\texttt{~~~~signal = "HOLD"}
+
+\vspace{0.5em}
+\textbf{Key Points:}
+\begin{itemize}
+\item Colon after condition
+\item Indentation matters!
+\item elif is optional
+\end{itemize}
+\end{columns}
+
+\bottomnote{Indentation (4 spaces) defines code blocks in Python}
+\end{frame}
+
+\begin{frame}[t]{For Loops}
+\begin{columns}[T]
+\column{0.55\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{02_for_loop_visual/chart.pdf}
+\end{center}
+
+\column{0.42\textwidth}
+\textbf{Iterate Over List:}\\
+\texttt{for price in prices:}\\
+\texttt{~~~~print(price)}
+
+\vspace{0.5em}
+\textbf{With Index:}\\
+\texttt{for i, p in enumerate(prices):}\\
+\texttt{~~~~print(f"Day \{i\}: \{p\}")}
+
+\vspace{0.5em}
+\textbf{Range:}\\
+\texttt{for i in range(5):}\\
+\texttt{~~~~print(i)}  \# 0,1,2,3,4
+\end{columns}
+
+\bottomnote{For loops iterate a known number of times}
+\end{frame}
+
+\begin{frame}[t]{While Loops}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{03_while_loop_diagram/chart.pdf}
+\end{center}
+
+\column{0.48\textwidth}
+\textbf{Basic While:}\\
+\texttt{balance = 10000}\\
+\texttt{while balance > 5000:}\\
+\texttt{~~~~balance *= 0.95}\\
+\texttt{~~~~print(balance)}
+
+\vspace{0.5em}
+\textbf{Use Cases:}
+\begin{itemize}
+\item Unknown iterations
+\item Waiting for condition
+\item Simulation until target
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Warning:} Infinite loops!
+\end{columns}
+
+\bottomnote{While loops continue until condition becomes False}
+\end{frame}
+
+\begin{frame}[t]{Nested Loops}
+\begin{center}
+\includegraphics[width=0.65\textwidth]{04_nested_loops/chart.pdf}
+\end{center}
+
+\textbf{Example:} Analyze multiple stocks across multiple days
+
+\texttt{for ticker in ["AAPL", "MSFT"]:}\\
+\texttt{~~~~for day in range(5):}\\
+\texttt{~~~~~~~~print(f"\{ticker\} day \{day\}")}
+
+\bottomnote{Nested loops multiply iterations -- watch performance}
+\end{frame}
+
+\begin{frame}[t]{Break and Continue}
+\begin{columns}[T]
+\column{0.55\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{05_break_continue/chart.pdf}
+\end{center}
+
+\column{0.42\textwidth}
+\textbf{Break:} Exit loop entirely
+
+\texttt{for price in prices:}\\
+\texttt{~~~~if price > 200:}\\
+\texttt{~~~~~~~~break}  \# stop now
+
+\vspace{0.5em}
+\textbf{Continue:} Skip to next iteration
+
+\texttt{for price in prices:}\\
+\texttt{~~~~if price < 0:}\\
+\texttt{~~~~~~~~continue}  \# skip this\\
+\texttt{~~~~process(price)}
+\end{columns}
+
+\bottomnote{Break stops loop; continue skips current iteration}
+\end{frame}
+
+\begin{frame}[t]{Trading Rules Decision Tree}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{06_trading_rules/chart.pdf}
+\end{center}
+
+\bottomnote{Trading rules are nested conditionals in code}
+\end{frame}
+
+\begin{frame}[t]{Loop Comparison}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{07_loop_comparison/chart.pdf}
+\end{center}
+
+\bottomnote{Choose loop type based on whether iterations are known}
+\end{frame}
+
+\begin{frame}[t]{Control Flow Patterns}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{08_control_patterns/chart.pdf}
+\end{center}
+
+\bottomnote{Combine patterns for complex trading logic}
+\end{frame}
+
+\begin{frame}[t]{Hands-on Exercise (25 min)}
+\textbf{Implement a simple trading system:}
+
+\begin{enumerate}
+\item Create price list: \texttt{prices = [180, 185, 195, 188, 205, 198]}
+
+\item Implement trading rules:
+\begin{itemize}
+\item If price > 200: SELL
+\item If price < 185: BUY
+\item Else: HOLD
+\end{itemize}
+
+\item Loop through prices and generate signals
+
+\item Count total BUY, SELL, HOLD signals
+
+\item Find first price that triggers SELL (use break)
+
+\item Skip negative prices if any (use continue)
+\end{enumerate}
+
+\bottomnote{This forms the basis of algorithmic trading}
+\end{frame}
+
+\begin{frame}[t]{Lesson Summary}
+\textbf{Key Takeaways:}
+\begin{itemize}
+\item if/elif/else for conditional execution
+\item for loops iterate over sequences
+\item while loops continue until condition is false
+\item break exits loop, continue skips iteration
+\item Indentation defines code blocks
+\end{itemize}
+
+\vspace{1em}
+\textbf{Next Lesson:} Functions
+
+\bottomnote{Control flow + functions = modular trading systems}
+\end{frame}
+
+\end{document}

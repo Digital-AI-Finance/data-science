@@ -1,0 +1,110 @@
+\documentclass[8pt,aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+
+\definecolor{mlpurple}{RGB}{51,51,178}
+\definecolor{mllavender}{RGB}{173,173,224}
+\definecolor{mllavender3}{RGB}{204,204,235}
+
+\setbeamercolor{palette primary}{bg=mllavender3,fg=mlpurple}
+\setbeamercolor{structure}{fg=mlpurple}
+\setbeamercolor{frametitle}{fg=mlpurple,bg=mllavender3}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamersize{text margin left=5mm,text margin right=5mm}
+
+\newcommand{\bottomnote}[1]{\vfill\footnotesize\textbf{#1}}
+
+
+\title{Lesson 22: Regularization}
+\subtitle{Data Science with Python -- BSc Course}
+\date{45 Minutes}
+
+\begin{document}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+\begin{frame}[t]{Learning Objectives}
+\textbf{After this lesson, you will be able to:}
+\begin{itemize}
+\item Apply Ridge (L2) regularization
+\item Apply Lasso (L1) for feature selection
+\item Tune lambda with cross-validation
+\item Handle multicollinearity
+\end{itemize}
+\bottomnote{Building towards your final project}
+\end{frame}
+
+
+\begin{frame}[t]{Overfitting Visual}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{01_overfitting_visual/chart.pdf}
+\end{center}
+\end{frame}
+
+
+\begin{frame}[t]{Ridge Concept}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{02_ridge_concept/chart.pdf}
+\end{center}
+\end{frame}
+
+
+\begin{frame}[t]{Lasso Concept}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{03_lasso_concept/chart.pdf}
+\end{center}
+\end{frame}
+
+
+\begin{frame}[t]{Coefficient Paths}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{04_coefficient_paths/chart.pdf}
+\end{center}
+\end{frame}
+
+
+\begin{frame}[t]{Lambda Tuning}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{05_lambda_tuning/chart.pdf}
+\end{center}
+\end{frame}
+
+
+\begin{frame}[t]{Cross Validation}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{06_cross_validation/chart.pdf}
+\end{center}
+\end{frame}
+
+
+\begin{frame}[t]{Feature Selection}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{07_feature_selection/chart.pdf}
+\end{center}
+\end{frame}
+
+
+\begin{frame}[t]{Finance Regularization}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{08_finance_regularization/chart.pdf}
+\end{center}
+\end{frame}
+
+
+\begin{frame}[t]{Lesson Summary}
+\textbf{Key Takeaways:}
+\begin{itemize}
+\item Apply Ridge (L2) regularization
+\item Apply Lasso (L1) for feature selection
+\item Tune lambda with cross-validation
+\item Handle multicollinearity
+\end{itemize}
+\bottomnote{Apply these skills in your final project}
+\end{frame}
+
+\end{document}

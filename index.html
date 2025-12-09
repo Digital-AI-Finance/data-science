@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Science with Python - Course Index</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        header { background: #2c3e50; color: white; padding: 30px 20px; margin-bottom: 30px; border-radius: 8px; }
+        h1 { font-size: 2em; margin-bottom: 10px; }
+        .stats { display: flex; gap: 30px; margin-top: 15px; }
+        .stat { background: rgba(255,255,255,0.1); padding: 10px 20px; border-radius: 5px; }
+        .stat-value { font-size: 1.5em; font-weight: bold; }
+        .stat-label { font-size: 0.9em; opacity: 0.8; }
+        .module { background: white; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); overflow: hidden; }
+        .module-header { background: #3498db; color: white; padding: 15px 20px; font-size: 1.2em; font-weight: bold; }
+        .lessons { padding: 0; }
+        .lesson { padding: 15px 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        .lesson:last-child { border-bottom: none; }
+        .lesson:hover { background: #f8f9fa; }
+        .lesson-title { font-weight: 500; }
+        .lesson-num { color: #3498db; font-weight: bold; margin-right: 10px; }
+        .lesson-meta { display: flex; gap: 15px; font-size: 0.9em; color: #666; }
+        .badge { background: #ecf0f1; padding: 3px 10px; border-radius: 12px; }
+        footer { text-align: center; padding: 20px; color: #666; font-size: 0.9em; }
+        .search { margin-bottom: 20px; }
+        .search input { width: 100%; padding: 12px 20px; font-size: 1em; border: 2px solid #ddd; border-radius: 25px; outline: none; }
+        .search input:focus { border-color: #3498db; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Data Science with Python</h1>
+            <p>BSc Course - Complete Index</p>
+            <div class="stats">
+                <div class="stat"><div class="stat-value">48</div><div class="stat-label">Lessons</div></div>
+                <div class="stat"><div class="stat-value">534</div><div class="stat-label">Slides</div></div>
+                <div class="stat"><div class="stat-value">384</div><div class="stat-label">Charts</div></div>
+                <div class="stat"><div class="stat-value">10</div><div class="stat-label">Modules</div></div>
+            </div>
+        </header>
+
+        <div class="search">
+            <input type="text" id="searchInput" placeholder="Search lessons..." onkeyup="filterLessons()">
+        </div>
+
+        <div class="module">
+            <div class="module-header">Module 1: Python Fundamentals</div>
+            <div class="lessons">
+                <div class="lesson" data-title="python setup">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L01</span>
+                        Python Setup
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">12 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="data structures">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L02</span>
+                        Data Structures
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">12 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="control flow">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L03</span>
+                        Control Flow
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">12 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="functions">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L04</span>
+                        Functions
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">12 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="dataframes introduction">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L05</span>
+                        DataFrames Introduction
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">12 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="selection filtering">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L06</span>
+                        Selection Filtering
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">12 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="module">
+            <div class="module-header">Module 2: Data Manipulation</div>
+            <div class="lessons">
+                <div class="lesson" data-title="missing data">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L07</span>
+                        Missing Data
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="basic operations">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L08</span>
+                        Basic Operations
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="groupby operations">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L09</span>
+                        GroupBy Operations
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="merging joining">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L10</span>
+                        Merging Joining
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="numpy basics">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L11</span>
+                        NumPy Basics
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="time series">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L12</span>
+                        Time Series
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="module">
+            <div class="module-header">Module 3: Statistics & Visualization</div>
+            <div class="lessons">
+                <div class="lesson" data-title="descriptive statistics">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L13</span>
+                        Descriptive Statistics
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="distributions">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L14</span>
+                        Distributions
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="hypothesis testing">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L15</span>
+                        Hypothesis Testing
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="correlation">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L16</span>
+                        Correlation
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="matplotlib basics">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L17</span>
+                        Matplotlib Basics
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="seaborn plots">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L18</span>
+                        Seaborn Plots
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="multi panel figures">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L19</span>
+                        Multi Panel Figures
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="data storytelling">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L20</span>
+                        Data Storytelling
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="module">
+            <div class="module-header">Module 4: ML: Regression</div>
+            <div class="lessons">
+                <div class="lesson" data-title="linear regression">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L21</span>
+                        Linear Regression
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="regularization">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L22</span>
+                        Regularization
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="regression metrics">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L23</span>
+                        Regression Metrics
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="factor models">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L24</span>
+                        Factor Models
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="module">
+            <div class="module-header">Module 5: ML: Classification</div>
+            <div class="lessons">
+                <div class="lesson" data-title="logistic regression">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L25</span>
+                        Logistic Regression
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="decision trees">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L26</span>
+                        Decision Trees
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="classification metrics">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L27</span>
+                        Classification Metrics
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="class imbalance">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L28</span>
+                        Class Imbalance
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="module">
+            <div class="module-header">Module 6: ML: Unsupervised</div>
+            <div class="lessons">
+                <div class="lesson" data-title="kmeans clustering">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L29</span>
+                        KMeans Clustering
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="hierarchical clustering">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L30</span>
+                        Hierarchical Clustering
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="pca">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L31</span>
+                        PCA
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="ml pipeline">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L32</span>
+                        ML Pipeline
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="module">
+            <div class="module-header">Module 7: Deep Learning</div>
+            <div class="lessons">
+                <div class="lesson" data-title="perceptron">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L33</span>
+                        Perceptron
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="mlp activations">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L34</span>
+                        MLP Activations
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="backpropagation">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L35</span>
+                        Backpropagation
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="overfitting prevention">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L36</span>
+                        Overfitting Prevention
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="module">
+            <div class="module-header">Module 8: NLP & Text</div>
+            <div class="lessons">
+                <div class="lesson" data-title="text preprocessing">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L37</span>
+                        Text Preprocessing
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="bow tfidf">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L38</span>
+                        BOW TFIDF
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="word embeddings">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L39</span>
+                        Word Embeddings
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="sentiment analysis">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L40</span>
+                        Sentiment Analysis
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="module">
+            <div class="module-header">Module 9: Deployment</div>
+            <div class="lessons">
+                <div class="lesson" data-title="model serialization">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L41</span>
+                        Model Serialization
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="fastapi">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L42</span>
+                        FastAPI
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="streamlit dashboards">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L43</span>
+                        Streamlit Dashboards
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="cloud deployment">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L44</span>
+                        Cloud Deployment
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="module">
+            <div class="module-header">Module 10: Capstone & Ethics</div>
+            <div class="lessons">
+                <div class="lesson" data-title="project work 1">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L45</span>
+                        Project Work 1
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="project work 2">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L46</span>
+                        Project Work 2
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="ml ethics">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L47</span>
+                        ML Ethics
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+                <div class="lesson" data-title="final presentations">
+                    <div class="lesson-title">
+                        <span class="lesson-num">L48</span>
+                        Final Presentations
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="badge">11 slides</span>
+                        <span class="badge">8 charts</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Generated: 2025-12-08 22:18</p>
+            <p><a href="DataScience_3_Complete.pdf">Download Complete PDF (8.2 MB)</a></p>
+        </footer>
+    </div>
+
+    <script>
+        function filterLessons() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            document.querySelectorAll('.lesson').forEach(lesson => {
+                const title = lesson.dataset.title;
+                lesson.style.display = title.includes(query) ? 'flex' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>
