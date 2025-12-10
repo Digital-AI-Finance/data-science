@@ -29,82 +29,158 @@
 \end{frame}
 
 \begin{frame}[t]{Learning Objectives}
+\textbf{The Problem:}
+We have 100 features but many are correlated. How do we reduce dimensions
+while preserving the most important information?
+
+\vspace{0.3em}
 \textbf{After this lesson, you will be able to:}
 \begin{itemize}
-\item Understand principal components
+\item Understand principal components as new axes
 \item Apply PCA with sklearn
-\item Interpret explained variance
-\item Reduce feature dimensions
+\item Interpret explained variance ratio
+\item Reduce feature dimensions for visualization and modeling
 \end{itemize}
-\bottomnote{Building towards your final project}
+\bottomnote{Finance Application: Factor discovery, risk decomposition, noise reduction}
 \end{frame}
 
 
-\begin{frame}[t]{Pca Concept}
+\begin{frame}[t]{PCA Concept}
+\textbf{Finding New Axes}
+\begin{itemize}
+\item PC1: direction of maximum variance
+\item PC2: orthogonal to PC1, captures next most variance
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{01_pca_concept/chart.pdf}
+\includegraphics[width=0.55\textwidth]{01_pca_concept/chart.pdf}
 \end{center}
+\bottomnote{PCA rotates coordinate system to align with data's natural directions}
 \end{frame}
 
 
-\begin{frame}[t]{Eigenvalues}
+\begin{frame}[t]{Eigenvalues and Eigenvectors}
+\textbf{The Math Behind PCA}
+\begin{itemize}
+\item Eigenvectors of covariance matrix = principal component directions
+\item Eigenvalues = variance explained by each component
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{02_eigenvalues/chart.pdf}
+\includegraphics[width=0.55\textwidth]{02_eigenvalues/chart.pdf}
 \end{center}
+\bottomnote{Larger eigenvalue = more important component. Sum of eigenvalues = total variance.}
 \end{frame}
 
 
-\begin{frame}[t]{Sklearn Pca}
+\begin{frame}[t]{sklearn PCA}
+\textbf{Implementation in Python}
+\begin{itemize}
+\item \texttt{from sklearn.decomposition import PCA}
+\item \texttt{pca = PCA(n\_components=2).fit\_transform(X)}
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{03_sklearn_pca/chart.pdf}
+\includegraphics[width=0.55\textwidth]{03_sklearn_pca/chart.pdf}
 \end{center}
+\bottomnote{Always standardize features first! PCA is sensitive to scale.}
 \end{frame}
 
 
 \begin{frame}[t]{Scree Plot}
+\textbf{How Many Components to Keep?}
+\begin{itemize}
+\item Plot eigenvalues in decreasing order
+\item Look for ``elbow'' where values level off
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{04_scree_plot/chart.pdf}
+\includegraphics[width=0.55\textwidth]{04_scree_plot/chart.pdf}
 \end{center}
+\bottomnote{Alternative: keep components until cumulative variance $>$ 90\%}
 \end{frame}
 
 
 \begin{frame}[t]{Explained Variance}
+\textbf{Cumulative Information Retained}
+\begin{itemize}
+\item \texttt{pca.explained\_variance\_ratio\_} shows each component's share
+\item Cumulative sum tells total information retained
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{05_explained_variance/chart.pdf}
+\includegraphics[width=0.55\textwidth]{05_explained_variance/chart.pdf}
 \end{center}
+\bottomnote{Example: 3 components explain 85\% of variance -- 97 features were mostly redundant}
 \end{frame}
 
 
 \begin{frame}[t]{Component Loadings}
+\textbf{Interpreting What Components Mean}
+\begin{itemize}
+\item Loadings = correlations between original features and components
+\item High loading = feature strongly influences that component
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{06_component_loadings/chart.pdf}
+\includegraphics[width=0.55\textwidth]{06_component_loadings/chart.pdf}
 \end{center}
+\bottomnote{Finance: PC1 often = ``market factor'', PC2 = ``size'' or ``value''}
 \end{frame}
 
 
-\begin{frame}[t]{Visualization}
+\begin{frame}[t]{Visualization in 2D}
+\textbf{Seeing High-Dimensional Data}
+\begin{itemize}
+\item Project to PC1 vs PC2 for 2D scatter plot
+\item Reveals clusters and outliers invisible in original space
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{07_visualization/chart.pdf}
+\includegraphics[width=0.55\textwidth]{07_visualization/chart.pdf}
 \end{center}
+\bottomnote{PCA visualization is exploratory -- always check explained variance}
 \end{frame}
 
 
 \begin{frame}[t]{Factor Extraction}
+\textbf{Finance Application: Statistical Factors}
+\begin{itemize}
+\item PCA on stock returns finds latent market factors
+\item First few PCs often correspond to market, sector, and style factors
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{08_factor_extraction/chart.pdf}
+\includegraphics[width=0.55\textwidth]{08_factor_extraction/chart.pdf}
 \end{center}
+\bottomnote{Statistical PCA vs economic factors (Fama-French) -- different but related}
+\end{frame}
+
+
+\begin{frame}[t]{Hands-On Exercise (25 min)}
+\textbf{Task: Discover Factors in Stock Returns}
+\begin{enumerate}
+\item Calculate daily returns for 30 stocks (1 year)
+\item Standardize returns and fit PCA
+\item Plot scree plot -- how many components needed for 80\% variance?
+\item Examine PC1 loadings -- what does it represent?
+\item Project stocks to PC1 vs PC2 and color by sector
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Deliverable:} Scree plot + 2D projection with sector colors.
+\bottomnote{Extension: Compare PC1 to S\&P 500 returns -- are they correlated?}
 \end{frame}
 
 
 \begin{frame}[t]{Lesson Summary}
+\textbf{Problem Solved:}
+We can now reduce high-dimensional data while preserving most information.
+
+\vspace{0.3em}
 \textbf{Key Takeaways:}
 \begin{itemize}
-\item Understand principal components
-\item Apply PCA with sklearn
-\item Interpret explained variance
-\item Reduce feature dimensions
+\item PCA finds orthogonal directions of maximum variance
+\item Scree plot and cumulative variance guide component selection
+\item Always standardize before PCA
+\item Finance: PCA extracts statistical factors from returns
 \end{itemize}
-\bottomnote{Apply these skills in your final project}
+
+\vspace{0.3em}
+\textbf{Next Lesson:} ML Pipeline (L32) -- putting it all together
+\bottomnote{Memory: PCA = rotate to max variance axes. PC1 = most important direction.}
 \end{frame}
 
 \end{document}

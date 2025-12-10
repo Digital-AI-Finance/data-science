@@ -29,82 +29,159 @@
 \end{frame}
 
 \begin{frame}[t]{Learning Objectives}
+\textbf{The Problem:}
+Neural networks have millions of weights. How does the network figure out
+which weights to adjust and by how much?
+
+\vspace{0.3em}
 \textbf{After this lesson, you will be able to:}
 \begin{itemize}
-\item Understand gradient descent
-\item Interpret loss curves
-\item Configure learning rate
-\item Monitor training progress
+\item Understand gradient descent optimization
+\item Interpret loss curves and diagnose training issues
+\item Configure learning rate and its effects
+\item Monitor training progress with validation metrics
 \end{itemize}
-\bottomnote{Building towards your final project}
+\bottomnote{Finance Application: Training predictive models on financial data}
 \end{frame}
 
 
 \begin{frame}[t]{Forward Pass}
+\textbf{Computing Predictions}
+\begin{itemize}
+\item Input flows through network layer by layer
+\item Each layer: $z = Wx + b$, then $a = \sigma(z)$
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{01_forward_pass/chart.pdf}
+\includegraphics[width=0.55\textwidth]{01_forward_pass/chart.pdf}
 \end{center}
+\bottomnote{Forward pass: input $\rightarrow$ hidden(s) $\rightarrow$ output = prediction}
 \end{frame}
 
 
 \begin{frame}[t]{Gradient Descent}
+\textbf{Walking Downhill on the Loss Surface}
+\begin{itemize}
+\item Compute gradient: $\frac{\partial L}{\partial w}$ tells direction of steepest increase
+\item Update: $w_{new} = w_{old} - \eta \cdot \frac{\partial L}{\partial w}$
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{02_gradient_descent/chart.pdf}
+\includegraphics[width=0.55\textwidth]{02_gradient_descent/chart.pdf}
 \end{center}
+\bottomnote{Gradient descent: repeatedly move opposite to gradient until minimum}
 \end{frame}
 
 
-\begin{frame}[t]{Backprop Intuition}
+\begin{frame}[t]{Backpropagation Intuition}
+\textbf{Efficiently Computing Gradients}
+\begin{itemize}
+\item Chain rule: propagate error backward through layers
+\item Each layer's gradient depends on layers after it
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{03_backprop_intuition/chart.pdf}
+\includegraphics[width=0.55\textwidth]{03_backprop_intuition/chart.pdf}
 \end{center}
+\bottomnote{Backprop = efficient gradient computation via chain rule (not a learning rule)}
 \end{frame}
 
 
 \begin{frame}[t]{Loss Functions}
+\textbf{What Are We Minimizing?}
+\begin{itemize}
+\item MSE: regression problems
+\item Cross-entropy: classification (binary or categorical)
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{04_loss_functions/chart.pdf}
+\includegraphics[width=0.55\textwidth]{04_loss_functions/chart.pdf}
 \end{center}
+\bottomnote{Match loss to problem: MSE for regression, cross-entropy for classification}
 \end{frame}
 
 
 \begin{frame}[t]{Learning Rate}
+\textbf{The Most Important Hyperparameter}
+\begin{itemize}
+\item Too high: oscillates, may diverge
+\item Too low: converges very slowly
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{05_learning_rate/chart.pdf}
+\includegraphics[width=0.55\textwidth]{05_learning_rate/chart.pdf}
 \end{center}
+\bottomnote{Start with 0.001 (Adam default). Reduce if loss is unstable.}
 \end{frame}
 
 
 \begin{frame}[t]{Training Curves}
+\textbf{Diagnosing Training}
+\begin{itemize}
+\item Plot loss vs epochs for train and validation
+\item Train $\downarrow$, val $\downarrow$: good. Train $\downarrow$, val $\uparrow$: overfitting
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{06_training_curves/chart.pdf}
+\includegraphics[width=0.55\textwidth]{06_training_curves/chart.pdf}
 \end{center}
+\bottomnote{Always monitor validation loss -- it shows real generalization}
 \end{frame}
 
 
 \begin{frame}[t]{Batch Sizes}
+\textbf{How Much Data Per Update?}
+\begin{itemize}
+\item Batch: all data (slow, stable)
+\item Mini-batch: 32-256 samples (fast, noisy but works)
+\item Stochastic: 1 sample (very noisy)
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{07_batch_sizes/chart.pdf}
+\includegraphics[width=0.55\textwidth]{07_batch_sizes/chart.pdf}
 \end{center}
+\bottomnote{Default: mini-batch of 32. Larger batches need larger learning rates.}
 \end{frame}
 
 
 \begin{frame}[t]{Volatility Prediction}
+\textbf{Finance Application}
+\begin{itemize}
+\item Input: lagged returns, volume, past volatility
+\item Output: next-day volatility (regression)
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{08_volatility_prediction/chart.pdf}
+\includegraphics[width=0.55\textwidth]{08_volatility_prediction/chart.pdf}
 \end{center}
+\bottomnote{Monitor training curves carefully -- financial data is noisy}
+\end{frame}
+
+
+\begin{frame}[t]{Hands-On Exercise (25 min)}
+\textbf{Task: Visualize Gradient Descent}
+\begin{enumerate}
+\item Create simple 2D function (e.g., parabola) and plot surface
+\item Implement gradient descent from scratch
+\item Plot optimization path for different learning rates
+\item Train Keras model and plot train/val loss curves
+\item Try batch sizes 16, 64, 256 -- compare convergence
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Deliverable:} 3D surface with optimization paths + loss curve comparison.
+\bottomnote{Extension: Implement momentum and compare to vanilla gradient descent}
 \end{frame}
 
 
 \begin{frame}[t]{Lesson Summary}
+\textbf{Problem Solved:}
+We understand how neural networks learn through backpropagation and gradient descent.
+
+\vspace{0.3em}
 \textbf{Key Takeaways:}
 \begin{itemize}
-\item Understand gradient descent
-\item Interpret loss curves
-\item Configure learning rate
-\item Monitor training progress
+\item Forward pass computes prediction, backward pass computes gradients
+\item Gradient descent updates weights to minimize loss
+\item Learning rate controls step size -- crucial hyperparameter
+\item Monitor train/val loss curves to diagnose training
 \end{itemize}
-\bottomnote{Apply these skills in your final project}
+
+\vspace{0.3em}
+\textbf{Next Lesson:} Overfitting Prevention (L36) -- regularization for neural networks
+\bottomnote{Memory: Backprop = chain rule. Learning rate = step size. Watch val loss.}
 \end{frame}
 
 \end{document}

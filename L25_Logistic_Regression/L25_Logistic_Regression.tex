@@ -29,82 +29,158 @@
 \end{frame}
 
 \begin{frame}[t]{Learning Objectives}
+\textbf{The Problem:}
+Linear regression predicts continuous values, but what if we need to predict categories?
+How do we classify stocks as ``buy'' or ``sell'' based on features?
+
+\vspace{0.3em}
 \textbf{After this lesson, you will be able to:}
 \begin{itemize}
-\item Understand sigmoid function
-\item Build binary classifiers
-\item Interpret odds ratios
-\item Predict market direction
+\item Understand the sigmoid function and probability output
+\item Build binary classifiers with sklearn
+\item Interpret coefficients as odds ratios
+\item Predict market direction (up/down)
 \end{itemize}
-\bottomnote{Building towards your final project}
+\bottomnote{Finance Application: Predicting whether tomorrow's return is positive or negative}
 \end{frame}
 
 
 \begin{frame}[t]{Sigmoid Function}
+\textbf{From Linear to Probability}
+\begin{itemize}
+\item $\sigma(z) = \frac{1}{1 + e^{-z}}$ -- squashes any value to (0, 1)
+\item Output is interpreted as $P(y=1|x)$ -- probability of positive class
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{01_sigmoid_function/chart.pdf}
+\includegraphics[width=0.55\textwidth]{01_sigmoid_function/chart.pdf}
 \end{center}
+\bottomnote{Key insight: Logistic regression = linear regression passed through sigmoid}
 \end{frame}
 
 
 \begin{frame}[t]{Decision Boundary}
+\textbf{Where Do We Draw the Line?}
+\begin{itemize}
+\item Default threshold: predict class 1 if $P(y=1) > 0.5$
+\item Decision boundary is where $\beta_0 + \beta_1 x = 0$
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{02_decision_boundary/chart.pdf}
+\includegraphics[width=0.55\textwidth]{02_decision_boundary/chart.pdf}
 \end{center}
+\bottomnote{The boundary can be adjusted based on costs of false positives vs false negatives}
 \end{frame}
 
 
-\begin{frame}[t]{Sklearn Logistic}
+\begin{frame}[t]{sklearn Implementation}
+\textbf{Same API as Linear Regression}
+\begin{itemize}
+\item \texttt{from sklearn.linear\_model import LogisticRegression}
+\item \texttt{model.fit(X, y)} then \texttt{model.predict(X\_new)}
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{03_sklearn_logistic/chart.pdf}
+\includegraphics[width=0.55\textwidth]{03_sklearn_logistic/chart.pdf}
 \end{center}
+\bottomnote{Use \texttt{model.predict\_proba(X)} to get probabilities instead of 0/1}
 \end{frame}
 
 
-\begin{frame}[t]{Odds Ratio}
+\begin{frame}[t]{Odds Ratio Interpretation}
+\textbf{What Do the Coefficients Mean?}
+\begin{itemize}
+\item $e^{\beta_j}$ = multiplicative change in odds per unit increase in $x_j$
+\item $e^{\beta} = 2$ means odds double when feature increases by 1
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{04_odds_ratio/chart.pdf}
+\includegraphics[width=0.55\textwidth]{04_odds_ratio/chart.pdf}
 \end{center}
+\bottomnote{Finance: ``Each 1\% increase in momentum doubles the odds of positive return''}
 \end{frame}
 
 
-\begin{frame}[t]{Multiclass}
+\begin{frame}[t]{Multiclass Classification}
+\textbf{More Than Two Classes}
+\begin{itemize}
+\item One-vs-Rest (OvR): train K binary classifiers, pick highest probability
+\item Softmax/Multinomial: direct extension of sigmoid to K classes
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{05_multiclass/chart.pdf}
+\includegraphics[width=0.55\textwidth]{05_multiclass/chart.pdf}
 \end{center}
+\bottomnote{sklearn default: \texttt{multi\_class='auto'} chooses automatically}
 \end{frame}
 
 
-\begin{frame}[t]{Regularization}
+\begin{frame}[t]{Regularization in Logistic}
+\textbf{Preventing Overfitting}
+\begin{itemize}
+\item Same L1 (Lasso) and L2 (Ridge) penalties apply
+\item sklearn default: L2 with \texttt{C=1.0} (inverse of $\lambda$)
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{06_regularization/chart.pdf}
+\includegraphics[width=0.55\textwidth]{06_regularization/chart.pdf}
 \end{center}
+\bottomnote{Lower C = stronger regularization (opposite of $\lambda$ convention)}
 \end{frame}
 
 
-\begin{frame}[t]{Probability Output}
+\begin{frame}[t]{Probability Calibration}
+\textbf{Are the Probabilities Accurate?}
+\begin{itemize}
+\item Model says 70\% -- does event happen 70\% of the time?
+\item Logistic regression is generally well-calibrated
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{07_probability_output/chart.pdf}
+\includegraphics[width=0.55\textwidth]{07_probability_output/chart.pdf}
 \end{center}
+\bottomnote{Calibration matters for risk management -- you need accurate probabilities}
 \end{frame}
 
 
-\begin{frame}[t]{Market Direction}
+\begin{frame}[t]{Market Direction Prediction}
+\textbf{Finance Application: Up or Down?}
+\begin{itemize}
+\item Features: lagged returns, volume, volatility
+\item Target: 1 if next-day return $> 0$, else 0
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{08_market_direction/chart.pdf}
+\includegraphics[width=0.55\textwidth]{08_market_direction/chart.pdf}
 \end{center}
+\bottomnote{Reality check: Even 52\% accuracy can be profitable with proper sizing}
+\end{frame}
+
+
+\begin{frame}[t]{Hands-On Exercise (25 min)}
+\textbf{Task: Predict Stock Direction}
+\begin{enumerate}
+\item Create binary target: 1 if next-day return $> 0$, else 0
+\item Features: 5-day momentum, 20-day volatility, volume ratio
+\item Fit logistic regression and examine coefficients
+\item Calculate accuracy on held-out test set
+\item Interpret: Which features increase odds of positive return?
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Deliverable:} Coefficient table with odds ratios + test accuracy.
+\bottomnote{Extension: Try different thresholds (0.4, 0.6) -- how does accuracy change?}
 \end{frame}
 
 
 \begin{frame}[t]{Lesson Summary}
+\textbf{Problem Solved:}
+We can now predict binary outcomes (up/down, buy/sell) and get probability estimates.
+
+\vspace{0.3em}
 \textbf{Key Takeaways:}
 \begin{itemize}
-\item Understand sigmoid function
-\item Build binary classifiers
-\item Interpret odds ratios
-\item Predict market direction
+\item Sigmoid transforms linear output to probability
+\item Coefficients: $e^{\beta}$ = odds ratio
+\item Same sklearn API: \texttt{fit()}, \texttt{predict()}, \texttt{predict\_proba()}
+\item Regularization via C parameter (lower = stronger)
 \end{itemize}
-\bottomnote{Apply these skills in your final project}
+
+\vspace{0.3em}
+\textbf{Next Lesson:} Decision Trees (L26) -- non-linear classification
+\bottomnote{Memory: Logistic = Linear + Sigmoid. Output is probability, not continuous value.}
 \end{frame}
 
 \end{document}

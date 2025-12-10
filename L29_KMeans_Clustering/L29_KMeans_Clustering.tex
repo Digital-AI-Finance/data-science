@@ -29,82 +29,158 @@
 \end{frame}
 
 \begin{frame}[t]{Learning Objectives}
+\textbf{The Problem:}
+We have 500 stocks with dozens of features. How do we group similar stocks together
+without predefined categories? This is unsupervised learning.
+
+\vspace{0.3em}
 \textbf{After this lesson, you will be able to:}
 \begin{itemize}
-\item Apply K-Means algorithm
-\item Choose optimal K (elbow method)
-\item Interpret cluster centers
-\item Segment financial assets
+\item Apply K-Means clustering algorithm
+\item Choose optimal K using elbow method and silhouette score
+\item Interpret cluster centers (centroids)
+\item Segment financial assets by behavior
 \end{itemize}
-\bottomnote{Building towards your final project}
+\bottomnote{Finance Application: Stock segmentation, customer clustering, regime detection}
 \end{frame}
 
 
-\begin{frame}[t]{Kmeans Concept}
+\begin{frame}[t]{K-Means Concept}
+\textbf{Partitioning Data into K Groups}
+\begin{itemize}
+\item Goal: minimize within-cluster variance (inertia)
+\item Each point belongs to cluster with nearest centroid
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{01_kmeans_concept/chart.pdf}
+\includegraphics[width=0.55\textwidth]{01_kmeans_concept/chart.pdf}
 \end{center}
+\bottomnote{K-Means finds compact, spherical clusters -- works well when clusters are well-separated}
 \end{frame}
 
 
 \begin{frame}[t]{Algorithm Steps}
+\textbf{Iterative Refinement}
+\begin{itemize}
+\item Initialize: randomly place K centroids
+\item Repeat: (1) assign points to nearest centroid, (2) update centroids to cluster means
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{02_algorithm_steps/chart.pdf}
+\includegraphics[width=0.55\textwidth]{02_algorithm_steps/chart.pdf}
 \end{center}
+\bottomnote{Convergence guaranteed but may find local minimum -- use multiple random starts}
 \end{frame}
 
 
-\begin{frame}[t]{Sklearn Kmeans}
+\begin{frame}[t]{sklearn KMeans}
+\textbf{Implementation in Python}
+\begin{itemize}
+\item \texttt{from sklearn.cluster import KMeans}
+\item \texttt{kmeans = KMeans(n\_clusters=K, n\_init=10).fit(X)}
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{03_sklearn_kmeans/chart.pdf}
+\includegraphics[width=0.55\textwidth]{03_sklearn_kmeans/chart.pdf}
 \end{center}
+\bottomnote{Access labels via \texttt{kmeans.labels\_} and centers via \texttt{kmeans.cluster\_centers\_}}
 \end{frame}
 
 
 \begin{frame}[t]{Elbow Method}
+\textbf{How Many Clusters?}
+\begin{itemize}
+\item Plot inertia vs K -- look for ``elbow'' where improvement slows
+\item Inertia always decreases with K; find diminishing returns
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{04_elbow_method/chart.pdf}
+\includegraphics[width=0.55\textwidth]{04_elbow_method/chart.pdf}
 \end{center}
+\bottomnote{The elbow is subjective -- combine with domain knowledge and silhouette score}
 \end{frame}
 
 
 \begin{frame}[t]{Silhouette Score}
+\textbf{Measuring Cluster Quality}
+\begin{itemize}
+\item Range: -1 to 1. Higher = better-defined clusters
+\item Compares within-cluster distance to nearest-cluster distance
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{05_silhouette_score/chart.pdf}
+\includegraphics[width=0.55\textwidth]{05_silhouette_score/chart.pdf}
 \end{center}
+\bottomnote{Silhouette $>$ 0.5 indicates reasonable structure. Negative = probably wrong cluster.}
 \end{frame}
 
 
 \begin{frame}[t]{Cluster Visualization}
+\textbf{Seeing the Results}
+\begin{itemize}
+\item 2D scatter plot with cluster colors
+\item For high-dimensional data: use PCA first, then plot
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{06_cluster_visualization/chart.pdf}
+\includegraphics[width=0.55\textwidth]{06_cluster_visualization/chart.pdf}
 \end{center}
+\bottomnote{Always visualize clusters to sanity-check results}
 \end{frame}
 
 
 \begin{frame}[t]{Centroid Interpretation}
+\textbf{What Does Each Cluster Represent?}
+\begin{itemize}
+\item Centroid = average feature values for that cluster
+\item Compare centroids to understand cluster characteristics
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{07_centroid_interpretation/chart.pdf}
+\includegraphics[width=0.55\textwidth]{07_centroid_interpretation/chart.pdf}
 \end{center}
+\bottomnote{Example: Cluster 1 = high volatility, low volume; Cluster 2 = low volatility, high volume}
 \end{frame}
 
 
 \begin{frame}[t]{Asset Clustering}
+\textbf{Finance Application: Stock Segmentation}
+\begin{itemize}
+\item Features: returns, volatility, beta, market cap, sector
+\item Clusters reveal natural groupings beyond traditional sectors
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{08_asset_clustering/chart.pdf}
+\includegraphics[width=0.55\textwidth]{08_asset_clustering/chart.pdf}
 \end{center}
+\bottomnote{Use for diversification: select one stock per cluster for uncorrelated portfolio}
+\end{frame}
+
+
+\begin{frame}[t]{Hands-On Exercise (25 min)}
+\textbf{Task: Cluster Stocks by Behavior}
+\begin{enumerate}
+\item Calculate features: 1-year return, volatility, beta for 50 stocks
+\item Standardize features (important for K-Means!)
+\item Run K-Means with K=2,3,4,5 -- plot elbow curve
+\item Choose best K using elbow + silhouette
+\item Interpret centroids: what characterizes each cluster?
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Deliverable:} Elbow plot + scatter plot of clusters with labels.
+\bottomnote{Extension: Compare clusters to GICS sectors -- do they align?}
 \end{frame}
 
 
 \begin{frame}[t]{Lesson Summary}
+\textbf{Problem Solved:}
+We can now discover natural groupings in data without predefined labels.
+
+\vspace{0.3em}
 \textbf{Key Takeaways:}
 \begin{itemize}
-\item Apply K-Means algorithm
-\item Choose optimal K (elbow method)
-\item Interpret cluster centers
-\item Segment financial assets
+\item K-Means: iteratively assign points to K cluster centers
+\item Choose K: elbow method + silhouette score
+\item Always standardize features before clustering
+\item Interpret centroids to understand cluster meaning
 \end{itemize}
-\bottomnote{Apply these skills in your final project}
+
+\vspace{0.3em}
+\textbf{Next Lesson:} Hierarchical Clustering (L30) -- clusters within clusters
+\bottomnote{Memory: K-Means minimizes inertia. Elbow = where curve bends. Silhouette = cluster quality.}
 \end{frame}
 
 \end{document}

@@ -29,82 +29,159 @@
 \end{frame}
 
 \begin{frame}[t]{Learning Objectives}
+\textbf{The Problem:}
+Neural networks have millions of parameters and can memorize training data.
+How do we ensure they generalize to new data?
+
+\vspace{0.3em}
 \textbf{After this lesson, you will be able to:}
 \begin{itemize}
 \item Apply dropout regularization
-\item Use early stopping
-\item Diagnose overfitting
-\item Build robust models
+\item Use early stopping to prevent overfitting
+\item Diagnose overfitting from learning curves
+\item Build robust neural network models
 \end{itemize}
-\bottomnote{Building towards your final project}
+\bottomnote{Finance Application: Preventing models from fitting to noise in market data}
 \end{frame}
 
 
-\begin{frame}[t]{Overfitting Visual}
+\begin{frame}[t]{Recognizing Overfitting}
+\textbf{The Gap Between Train and Test}
+\begin{itemize}
+\item Training loss keeps decreasing, validation loss increases
+\item Model memorizes training data instead of learning patterns
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{01_overfitting_visual/chart.pdf}
+\includegraphics[width=0.55\textwidth]{01_overfitting_visual/chart.pdf}
 \end{center}
+\bottomnote{Sign: train accuracy 99\%, test accuracy 60\% = severe overfitting}
 \end{frame}
 
 
 \begin{frame}[t]{Dropout Concept}
+\textbf{Randomly Ignoring Neurons}
+\begin{itemize}
+\item During training: randomly set fraction of neurons to zero
+\item Forces network to not rely on any single neuron
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{02_dropout_concept/chart.pdf}
+\includegraphics[width=0.55\textwidth]{02_dropout_concept/chart.pdf}
 \end{center}
+\bottomnote{Dropout = training many thinned networks, averaging at test time}
 \end{frame}
 
 
-\begin{frame}[t]{Keras Dropout}
+\begin{frame}[t]{Keras Dropout Layer}
+\textbf{Implementation}
+\begin{itemize}
+\item \texttt{model.add(Dropout(0.5))} -- drop 50\% of neurons
+\item Place after Dense layers, typically 0.2-0.5 rate
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{03_keras_dropout/chart.pdf}
+\includegraphics[width=0.55\textwidth]{03_keras_dropout/chart.pdf}
 \end{center}
+\bottomnote{Common pattern: Dense $\rightarrow$ Dropout $\rightarrow$ Dense $\rightarrow$ Dropout}
 \end{frame}
 
 
 \begin{frame}[t]{Early Stopping}
+\textbf{Stop Before Overfitting}
+\begin{itemize}
+\item Monitor validation loss; stop when it starts increasing
+\item \texttt{EarlyStopping(patience=10, restore\_best\_weights=True)}
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{04_early_stopping/chart.pdf}
+\includegraphics[width=0.55\textwidth]{04_early_stopping/chart.pdf}
 \end{center}
+\bottomnote{Patience = how many epochs without improvement before stopping}
 \end{frame}
 
 
 \begin{frame}[t]{Validation Curves}
+\textbf{Reading the Learning Curve}
+\begin{itemize}
+\item Underfitting: both train and val loss high
+\item Overfitting: train low, val high (growing gap)
+\item Good fit: both low, small gap
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{05_validation_curves/chart.pdf}
+\includegraphics[width=0.55\textwidth]{05_validation_curves/chart.pdf}
 \end{center}
+\bottomnote{Always plot train and val loss together during development}
 \end{frame}
 
 
-\begin{frame}[t]{Regularization L2}
+\begin{frame}[t]{L2 Regularization}
+\textbf{Penalizing Large Weights}
+\begin{itemize}
+\item Add $\lambda \sum w^2$ to loss function
+\item Keras: \texttt{Dense(64, kernel\_regularizer=l2(0.01))}
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{06_regularization_l2/chart.pdf}
+\includegraphics[width=0.55\textwidth]{06_regularization_l2/chart.pdf}
 \end{center}
+\bottomnote{L2 regularization keeps weights small, reducing model complexity}
 \end{frame}
 
 
 \begin{frame}[t]{Data Augmentation}
+\textbf{Creating More Training Data}
+\begin{itemize}
+\item For images: rotate, flip, crop, adjust brightness
+\item For time series: add noise, time warping
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{07_data_augmentation/chart.pdf}
+\includegraphics[width=0.55\textwidth]{07_data_augmentation/chart.pdf}
 \end{center}
+\bottomnote{More diverse training data = better generalization}
 \end{frame}
 
 
 \begin{frame}[t]{Finance Regularization}
+\textbf{Special Considerations for Financial Data}
+\begin{itemize}
+\item Financial data is noisy -- regularization is essential
+\item Use dropout + early stopping + small networks
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{08_finance_regularization/chart.pdf}
+\includegraphics[width=0.55\textwidth]{08_finance_regularization/chart.pdf}
 \end{center}
+\bottomnote{Rule: simpler models often work better on financial data}
+\end{frame}
+
+
+\begin{frame}[t]{Hands-On Exercise (25 min)}
+\textbf{Task: Compare Regularization Techniques}
+\begin{enumerate}
+\item Create overfit-prone dataset (few samples, many features)
+\item Train baseline MLP -- observe severe overfitting
+\item Add Dropout(0.5) -- compare train/val curves
+\item Add EarlyStopping -- when does training stop?
+\item Compare final test accuracy across all variants
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Deliverable:} Side-by-side learning curves + accuracy comparison table.
+\bottomnote{Extension: Try combining dropout + L2 + early stopping}
 \end{frame}
 
 
 \begin{frame}[t]{Lesson Summary}
+\textbf{Problem Solved:}
+We can now prevent neural networks from memorizing data and ensure generalization.
+
+\vspace{0.3em}
 \textbf{Key Takeaways:}
 \begin{itemize}
-\item Apply dropout regularization
-\item Use early stopping
-\item Diagnose overfitting
-\item Build robust models
+\item Dropout: randomly zero neurons during training
+\item Early stopping: halt when validation loss stops improving
+\item L2 regularization: penalize large weights
+\item Always monitor train vs validation loss curves
 \end{itemize}
-\bottomnote{Apply these skills in your final project}
+
+\vspace{0.3em}
+\textbf{Next Lesson:} Text Preprocessing (L37) -- preparing text for NLP
+\bottomnote{Memory: Dropout = random zeros. Early stopping = stop at best val. Watch the gap.}
 \end{frame}
 
 \end{document}

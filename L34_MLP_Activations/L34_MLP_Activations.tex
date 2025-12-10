@@ -29,82 +29,158 @@
 \end{frame}
 
 \begin{frame}[t]{Learning Objectives}
+\textbf{The Problem:}
+Single perceptrons can only learn linear boundaries.
+How do we build networks that learn complex, non-linear patterns?
+
+\vspace{0.3em}
 \textbf{After this lesson, you will be able to:}
 \begin{itemize}
-\item Design MLP architectures
-\item Choose activation functions
-\item Build models with Keras
-\item Apply to non-linear problems
+\item Design multi-layer perceptron (MLP) architectures
+\item Choose appropriate activation functions (ReLU, sigmoid, softmax)
+\item Build neural networks with Keras
+\item Apply MLPs to non-linear classification problems
 \end{itemize}
-\bottomnote{Building towards your final project}
+\bottomnote{Finance Application: Non-linear regime detection and pattern recognition}
 \end{frame}
 
 
-\begin{frame}[t]{Mlp Architecture}
+\begin{frame}[t]{MLP Architecture}
+\textbf{Adding Hidden Layers}
+\begin{itemize}
+\item Input layer $\rightarrow$ Hidden layer(s) $\rightarrow$ Output layer
+\item Hidden layers learn intermediate representations
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{01_mlp_architecture/chart.pdf}
+\includegraphics[width=0.55\textwidth]{01_mlp_architecture/chart.pdf}
 \end{center}
+\bottomnote{More layers = more complex patterns, but also more parameters to train}
 \end{frame}
 
 
-\begin{frame}[t]{Relu Activation}
+\begin{frame}[t]{ReLU Activation}
+\textbf{The Modern Default}
+\begin{itemize}
+\item ReLU$(x) = \max(0, x)$ -- simple, fast, effective
+\item Solves vanishing gradient problem of sigmoid
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{02_relu_activation/chart.pdf}
+\includegraphics[width=0.55\textwidth]{02_relu_activation/chart.pdf}
 \end{center}
+\bottomnote{Use ReLU for hidden layers. It's the default choice in 2024.}
 \end{frame}
 
 
-\begin{frame}[t]{Sigmoid Softmax}
+\begin{frame}[t]{Sigmoid and Softmax}
+\textbf{Output Layer Activations}
+\begin{itemize}
+\item Sigmoid: binary classification (output in [0,1])
+\item Softmax: multi-class (outputs sum to 1)
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{03_sigmoid_softmax/chart.pdf}
+\includegraphics[width=0.55\textwidth]{03_sigmoid_softmax/chart.pdf}
 \end{center}
+\bottomnote{Rule: ReLU for hidden layers, sigmoid/softmax for output layer}
 \end{frame}
 
 
-\begin{frame}[t]{Keras Sequential}
+\begin{frame}[t]{Keras Sequential API}
+\textbf{Building Networks in Python}
+\begin{itemize}
+\item \texttt{model = Sequential([Dense(64, activation='relu'), Dense(1, activation='sigmoid')])}
+\item \texttt{model.compile(optimizer='adam', loss='binary\_crossentropy')}
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{04_keras_sequential/chart.pdf}
+\includegraphics[width=0.55\textwidth]{04_keras_sequential/chart.pdf}
 \end{center}
+\bottomnote{Keras pattern: add layers sequentially, compile, fit, predict}
 \end{frame}
 
 
-\begin{frame}[t]{Hidden Layers}
+\begin{frame}[t]{Choosing Hidden Layers}
+\textbf{How Many Neurons? How Many Layers?}
+\begin{itemize}
+\item Start simple: 1-2 hidden layers, 32-128 neurons
+\item More complex patterns need deeper networks
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{05_hidden_layers/chart.pdf}
+\includegraphics[width=0.55\textwidth]{05_hidden_layers/chart.pdf}
 \end{center}
+\bottomnote{Rule of thumb: start small, increase if underfitting}
 \end{frame}
 
 
 \begin{frame}[t]{Parameter Counting}
+\textbf{How Many Weights to Learn?}
+\begin{itemize}
+\item Dense layer: (inputs + 1) $\times$ outputs parameters
+\item More parameters = more expressive but slower, prone to overfit
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{06_parameter_counting/chart.pdf}
+\includegraphics[width=0.55\textwidth]{06_parameter_counting/chart.pdf}
 \end{center}
+\bottomnote{Check \texttt{model.summary()} to see parameter count}
 \end{frame}
 
 
 \begin{frame}[t]{Universal Approximation}
+\textbf{Why Neural Networks Are Powerful}
+\begin{itemize}
+\item Theorem: MLP with one hidden layer can approximate any continuous function
+\item Caveat: may need exponentially many neurons
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{07_universal_approximation/chart.pdf}
+\includegraphics[width=0.55\textwidth]{07_universal_approximation/chart.pdf}
 \end{center}
+\bottomnote{Theory says possible; practice says depth often works better than width}
 \end{frame}
 
 
-\begin{frame}[t]{Market Regimes}
+\begin{frame}[t]{Market Regime Detection}
+\textbf{Finance Application}
+\begin{itemize}
+\item Inputs: volatility, momentum, correlation features
+\item Output: regime class (bull, bear, sideways)
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{08_market_regimes/chart.pdf}
+\includegraphics[width=0.55\textwidth]{08_market_regimes/chart.pdf}
 \end{center}
+\bottomnote{MLPs can capture non-linear regime boundaries that linear models miss}
+\end{frame}
+
+
+\begin{frame}[t]{Hands-On Exercise (25 min)}
+\textbf{Task: Build MLP for XOR and Beyond}
+\begin{enumerate}
+\item Create XOR dataset and verify perceptron fails
+\item Build MLP: 2 inputs $\rightarrow$ 4 hidden (ReLU) $\rightarrow$ 1 output (sigmoid)
+\item Train and verify 100\% accuracy on XOR
+\item Visualize decision boundary -- observe non-linearity
+\item Apply to 3-class classification with softmax output
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Deliverable:} XOR decision boundary plot + 3-class accuracy.
+\bottomnote{Extension: Try different hidden layer sizes -- how does decision boundary change?}
 \end{frame}
 
 
 \begin{frame}[t]{Lesson Summary}
+\textbf{Problem Solved:}
+Multi-layer perceptrons overcome the linear limitation and learn complex patterns.
+
+\vspace{0.3em}
 \textbf{Key Takeaways:}
 \begin{itemize}
-\item Design MLP architectures
-\item Choose activation functions
-\item Build models with Keras
-\item Apply to non-linear problems
+\item Hidden layers enable non-linear decision boundaries
+\item ReLU for hidden layers, sigmoid/softmax for output
+\item Keras: Sequential API makes building networks easy
+\item Universal approximation: MLPs can learn any pattern (in theory)
 \end{itemize}
-\bottomnote{Apply these skills in your final project}
+
+\vspace{0.3em}
+\textbf{Next Lesson:} Backpropagation (L35) -- how networks actually learn
+\bottomnote{Memory: ReLU = max(0,x). Hidden layers = non-linear power. Keras = easy MLPs.}
 \end{frame}
 
 \end{document}

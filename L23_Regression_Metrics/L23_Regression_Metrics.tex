@@ -29,82 +29,156 @@
 \end{frame}
 
 \begin{frame}[t]{Learning Objectives}
+\textbf{The Problem:}
+We've built a regression model, but how good is it? How do we compare different models objectively?
+
+\vspace{0.3em}
 \textbf{After this lesson, you will be able to:}
 \begin{itemize}
-\item Calculate MSE, RMSE, MAE
-\item Interpret R-squared
-\item Compare models fairly
-\item Handle time series validation
+\item Calculate MSE, RMSE, and MAE for prediction quality
+\item Interpret $R^2$ as variance explained
+\item Use adjusted $R^2$ to penalize model complexity
+\item Apply time series cross-validation for financial data
 \end{itemize}
-\bottomnote{Building towards your final project}
+\bottomnote{Finance Application: Evaluating return prediction models before deployment}
 \end{frame}
 
 
-\begin{frame}[t]{Mse Formula}
+\begin{frame}[t]{Mean Squared Error (MSE)}
+\textbf{The Foundation Metric}
+\begin{itemize}
+\item $\text{MSE} = \frac{1}{n}\sum(y_i - \hat{y}_i)^2$
+\item Units are squared (e.g., dollars squared) -- hard to interpret directly
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{01_mse_formula/chart.pdf}
+\includegraphics[width=0.55\textwidth]{01_mse_formula/chart.pdf}
 \end{center}
+\bottomnote{MSE penalizes large errors heavily due to squaring -- sensitive to outliers}
 \end{frame}
 
 
-\begin{frame}[t]{Rmse Mae}
+\begin{frame}[t]{RMSE and MAE}
+\textbf{Interpretable Error Measures}
+\begin{itemize}
+\item RMSE $= \sqrt{\text{MSE}}$ -- same units as $y$, penalizes large errors
+\item MAE $= \frac{1}{n}\sum|y_i - \hat{y}_i|$ -- average absolute error, robust to outliers
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{02_rmse_mae/chart.pdf}
+\includegraphics[width=0.55\textwidth]{02_rmse_mae/chart.pdf}
 \end{center}
+\bottomnote{Rule: RMSE $\geq$ MAE always. If RMSE $\gg$ MAE, you have large outliers.}
 \end{frame}
 
 
-\begin{frame}[t]{R Squared}
+\begin{frame}[t]{R-Squared ($R^2$)}
+\textbf{Proportion of Variance Explained}
+\begin{itemize}
+\item $R^2 = 1 - \frac{\text{SS}_\text{res}}{\text{SS}_\text{tot}}$ -- ranges from 0 to 1
+\item $R^2 = 0.7$ means model explains 70\% of variance in $y$
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{03_r_squared/chart.pdf}
+\includegraphics[width=0.55\textwidth]{03_r_squared/chart.pdf}
 \end{center}
+\bottomnote{Warning: $R^2$ always increases with more features -- can be misleading}
 \end{frame}
 
 
-\begin{frame}[t]{Adjusted R2}
+\begin{frame}[t]{Adjusted $R^2$}
+\textbf{Penalizing Model Complexity}
+\begin{itemize}
+\item Adjusted $R^2 = 1 - \frac{(1-R^2)(n-1)}{n-p-1}$ where $p$ = number of features
+\item Only increases if new feature improves fit more than expected by chance
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{04_adjusted_r2/chart.pdf}
+\includegraphics[width=0.55\textwidth]{04_adjusted_r2/chart.pdf}
 \end{center}
+\bottomnote{Use adjusted $R^2$ when comparing models with different numbers of features}
 \end{frame}
 
 
 \begin{frame}[t]{Residual Analysis}
+\textbf{Checking Model Assumptions}
+\begin{itemize}
+\item Plot residuals vs fitted values -- should show no pattern
+\item Patterns indicate missing nonlinearity or heteroscedasticity
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{05_residual_analysis/chart.pdf}
+\includegraphics[width=0.55\textwidth]{05_residual_analysis/chart.pdf}
 \end{center}
+\bottomnote{Good practice: Always plot residuals before trusting your model}
 \end{frame}
 
 
 \begin{frame}[t]{Model Comparison}
+\textbf{Fair Comparison Requires Same Data}
+\begin{itemize}
+\item Compare on held-out test set, not training set
+\item Use cross-validation for robust comparison
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{06_model_comparison/chart.pdf}
+\includegraphics[width=0.55\textwidth]{06_model_comparison/chart.pdf}
 \end{center}
+\bottomnote{Never compare training $R^2$ values -- always use test set performance}
 \end{frame}
 
 
-\begin{frame}[t]{Time Series Cv}
+\begin{frame}[t]{Time Series Cross-Validation}
+\textbf{Respecting Temporal Order}
+\begin{itemize}
+\item Standard CV shuffles data -- invalid for time series (future leaks into past)
+\item Rolling window: train on $[t_1, t_n]$, test on $[t_{n+1}, t_{n+k}]$
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{07_time_series_cv/chart.pdf}
+\includegraphics[width=0.55\textwidth]{07_time_series_cv/chart.pdf}
 \end{center}
+\bottomnote{Finance rule: Never train on data from the future -- use TimeSeriesSplit}
 \end{frame}
 
 
-\begin{frame}[t]{Finance Metrics}
+\begin{frame}[t]{Finance-Specific Metrics}
+\textbf{Beyond Standard Regression Metrics}
+\begin{itemize}
+\item Information Coefficient (IC): correlation between predicted and actual returns
+\item Hit Rate: percentage of correct direction predictions
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{08_finance_metrics/chart.pdf}
+\includegraphics[width=0.55\textwidth]{08_finance_metrics/chart.pdf}
 \end{center}
+\bottomnote{In trading, predicting direction matters more than magnitude}
+\end{frame}
+
+
+\begin{frame}[t]{Hands-On Exercise (25 min)}
+\textbf{Task: Evaluate a Stock Return Prediction Model}
+\begin{enumerate}
+\item Fit a linear regression predicting next-day returns from lagged features
+\item Calculate MSE, RMSE, MAE, and $R^2$ on a test set
+\item Plot residuals vs predicted values -- any patterns?
+\item Use \texttt{TimeSeriesSplit} for proper cross-validation
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Deliverable:} Summary table of metrics + residual plot.
+\bottomnote{Extension: Calculate Information Coefficient and compare to $R^2$}
 \end{frame}
 
 
 \begin{frame}[t]{Lesson Summary}
+\textbf{Problem Solved:}
+We can now objectively measure and compare regression model quality.
+
+\vspace{0.3em}
 \textbf{Key Takeaways:}
 \begin{itemize}
-\item Calculate MSE, RMSE, MAE
-\item Interpret R-squared
-\item Compare models fairly
-\item Handle time series validation
+\item RMSE/MAE: interpretable error in original units
+\item $R^2$: proportion of variance explained (0 to 1)
+\item Adjusted $R^2$: penalizes unnecessary complexity
+\item Time series requires special validation (no data leakage)
 \end{itemize}
-\bottomnote{Apply these skills in your final project}
+
+\vspace{0.3em}
+\textbf{Next Lesson:} Factor Models (L24) -- multi-factor return prediction
+\bottomnote{Memory: RMSE punishes outliers, MAE treats all errors equally, $R^2$ is \% explained}
 \end{frame}
 
 \end{document}

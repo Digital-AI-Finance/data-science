@@ -29,82 +29,214 @@
 \end{frame}
 
 \begin{frame}[t]{Learning Objectives}
+\textbf{The Problem:}
+A portfolio manager needs to understand how stocks respond to market movements.
+How do we quantify systematic risk?
+
+\vspace{0.3em}
 \textbf{After this lesson, you will be able to:}
 \begin{itemize}
-\item Understand OLS estimation
-\item Fit linear models with sklearn
-\item Interpret coefficients
-\item Apply to stock price prediction
+\item Understand OLS estimation and the least squares principle
+\item Fit linear models using sklearn's LinearRegression
+\item Interpret coefficients (slope as beta, intercept as alpha)
+\item Estimate CAPM beta to classify stocks by risk profile
 \end{itemize}
-\bottomnote{Building towards your final project}
+\bottomnote{Finance Application: Stock classification for portfolio construction}
 \end{frame}
 
 
 \begin{frame}[t]{Regression Concept}
+\textbf{Finding the Best-Fit Line}
+\begin{itemize}
+\item Linear regression finds the line that best describes the relationship
+\item In finance: How does stock return respond to market return?
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{01_regression_concept/chart.pdf}
+\includegraphics[width=0.55\textwidth]{01_regression_concept/chart.pdf}
 \end{center}
+\bottomnote{The ``best'' line minimizes the sum of squared vertical distances (residuals)}
 \end{frame}
 
 
-\begin{frame}[t]{Ols Formula}
+\begin{frame}[t]{Which Line Fits Best?}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{02_ols_formula/chart.pdf}
+\includegraphics[width=0.65\textwidth]{01b_multiple_lines/chart.pdf}
 \end{center}
+\bottomnote{OLS finds the unique line that minimizes total squared error}
 \end{frame}
 
 
-\begin{frame}[t]{Sklearn Api}
+\begin{frame}[t]{OLS Formula}
+\textbf{Ordinary Least Squares: The Math}
+\begin{itemize}
+\item Goal: Find $\beta_0$, $\beta_1$ that minimize $\sum(y_i - \hat{y}_i)^2$
+\item Solution: $\beta_1 = \frac{\sum(x_i - \bar{x})(y_i - \bar{y})}{\sum(x_i - \bar{x})^2}$
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{03_sklearn_api/chart.pdf}
+\includegraphics[width=0.55\textwidth]{02_ols_formula/chart.pdf}
 \end{center}
+\bottomnote{Why squares? (1) Makes errors positive, (2) Penalizes large errors more}
+\end{frame}
+
+
+\begin{frame}[t]{sklearn API}
+\textbf{Implementation in Python}
+\begin{itemize}
+\item \texttt{from sklearn.linear\_model import LinearRegression}
+\item \texttt{model = LinearRegression().fit(X, y)}
+\item Access: \texttt{model.coef\_} (slope), \texttt{model.intercept\_}
+\end{itemize}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{03_sklearn_api/chart.pdf}
+\end{center}
+\bottomnote{Pattern: model.fit(X, y) then model.predict(X\_new) -- works for all sklearn models}
 \end{frame}
 
 
 \begin{frame}[t]{Coefficient Interpretation}
+\textbf{What Do the Numbers Mean?}
+\begin{itemize}
+\item \textbf{Slope ($\beta_1$):} For each 1\% market move, stock moves $\beta_1$\%
+\item \textbf{Intercept ($\beta_0$):} Stock's return when market return is zero
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{04_coefficient_interpretation/chart.pdf}
+\includegraphics[width=0.55\textwidth]{04_coefficient_interpretation/chart.pdf}
 \end{center}
+\bottomnote{Finance translation: Slope = beta (systematic risk), Intercept = alpha (skill)}
 \end{frame}
 
 
-\begin{frame}[t]{Prediction Line}
+\begin{frame}[t]{Different Slopes = Different Betas}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{05_prediction_line/chart.pdf}
+\includegraphics[width=0.65\textwidth]{04b_slopes_comparison/chart.pdf}
 \end{center}
+\bottomnote{Higher beta = stock amplifies market moves more}
+\end{frame}
+
+
+\begin{frame}[t]{Making Predictions}
+\textbf{Using the Model for Forecasting}
+\begin{itemize}
+\item Once fitted, predict stock return for any market scenario
+\item \texttt{predicted = model.predict([[market\_return]])}
+\end{itemize}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{05_prediction_line/chart.pdf}
+\end{center}
+\bottomnote{Caution: Predictions assume the relationship stays stable}
+\end{frame}
+
+
+\begin{frame}[t]{Predicted vs Actual}
+\begin{center}
+\includegraphics[width=0.50\textwidth]{05b_predicted_vs_actual/chart.pdf}
+\end{center}
+\bottomnote{Points on the diagonal = perfect predictions. R-squared measures fit quality.}
+\end{frame}
+
+
+\begin{frame}[t]{Extrapolation Warning}
+\begin{center}
+\includegraphics[width=0.65\textwidth]{05c_extrapolation_warning/chart.pdf}
+\end{center}
+\bottomnote{Never predict outside your training data range!}
 \end{frame}
 
 
 \begin{frame}[t]{Residuals}
+\textbf{Checking Prediction Quality}
+\begin{itemize}
+\item Residual = Actual - Predicted ($e_i = y_i - \hat{y}_i$)
+\item Good model: residuals should be random (no pattern)
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{06_residuals/chart.pdf}
+\includegraphics[width=0.55\textwidth]{06_residuals/chart.pdf}
 \end{center}
+\bottomnote{Plot residuals vs predicted: if you see a pattern, the model is missing something}
+\end{frame}
+
+
+\begin{frame}[t]{Residual Distribution}
+\begin{center}
+\includegraphics[width=0.65\textwidth]{06b_residual_histogram/chart.pdf}
+\end{center}
+\bottomnote{Normality assumption: residuals should follow a bell curve centered at zero}
 \end{frame}
 
 
 \begin{frame}[t]{Assumptions}
+\textbf{When Does Linear Regression Work?}
+\begin{itemize}
+\item \textbf{Linearity:} Relationship is actually linear (not curved)
+\item \textbf{Homoscedasticity:} Variance of errors is constant
+\item \textbf{Normality:} Residuals are normally distributed
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{07_assumptions/chart.pdf}
+\includegraphics[width=0.50\textwidth]{07_assumptions/chart.pdf}
 \end{center}
+\bottomnote{Finance reality: Stock returns often violate these -- check residuals}
 \end{frame}
 
 
-\begin{frame}[t]{Capm Beta}
+\begin{frame}[t]{Homoscedasticity Check}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{08_capm_beta/chart.pdf}
+\includegraphics[width=0.65\textwidth]{07b_homoscedasticity/chart.pdf}
 \end{center}
+\bottomnote{Funnel shape = heteroscedasticity. Fix: weighted least squares or log transform}
+\end{frame}
+
+
+\begin{frame}[t]{CAPM Beta}
+\textbf{The Solution: Stock Classification by Systematic Risk}
+\begin{itemize}
+\item \textbf{Beta $>$ 1:} Aggressive stock -- amplifies market moves
+\item \textbf{Beta $<$ 1:} Defensive stock -- dampens volatility
+\end{itemize}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{08_capm_beta/chart.pdf}
+\end{center}
+\bottomnote{Alpha ($\beta_0$): Outperformance after risk adjustment}
+\end{frame}
+
+
+\begin{frame}[t]{Beta Comparison}
+\begin{center}
+\includegraphics[width=0.65\textwidth]{08b_beta_comparison/chart.pdf}
+\end{center}
+\bottomnote{Mix defensive (low beta) and aggressive (high beta) stocks based on risk tolerance}
+\end{frame}
+
+
+\begin{frame}[t]{Hands-On Exercise (25 min)}
+\textbf{Task: Estimate Beta for Your Favorite Stock}
+\begin{enumerate}
+\item Download 1 year of daily returns for a stock (e.g., MSFT) and SPY
+\item Fit: \texttt{model.fit(spy\_returns, stock\_returns)}
+\item Extract and interpret: What is the beta? What is the alpha?
+\item Plot the regression line with actual data points
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Deliverable:} Scatter plot with regression line, annotated with beta value.
+\bottomnote{Extension: Compare beta estimates using different time periods (1yr vs 5yr)}
 \end{frame}
 
 
 \begin{frame}[t]{Lesson Summary}
+\textbf{Problem Solved:}
+We can now quantify systematic risk using CAPM beta via linear regression.
+
+\vspace{0.3em}
 \textbf{Key Takeaways:}
 \begin{itemize}
-\item Understand OLS estimation
-\item Fit linear models with sklearn
-\item Interpret coefficients
-\item Apply to stock price prediction
+\item OLS finds the line that minimizes squared errors
+\item sklearn: \texttt{LinearRegression().fit(X, y)} -- three lines of code
+\item Slope = beta (market sensitivity), Intercept = alpha (skill)
 \end{itemize}
-\bottomnote{Apply these skills in your final project}
+
+\vspace{0.3em}
+\textbf{Next Lesson:} Regularization (L22) -- what happens with too many features?
+\bottomnote{Memory: Beta = slope of stock vs market regression. High beta = high volatility.}
 \end{frame}
 
 \end{document}

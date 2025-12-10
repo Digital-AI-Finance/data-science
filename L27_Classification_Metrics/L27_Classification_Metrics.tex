@@ -29,82 +29,158 @@
 \end{frame}
 
 \begin{frame}[t]{Learning Objectives}
+\textbf{The Problem:}
+Our classifier has 95\% accuracy -- is that good? What if 95\% of samples are one class?
+How do we properly evaluate classification models?
+
+\vspace{0.3em}
 \textbf{After this lesson, you will be able to:}
 \begin{itemize}
-\item Build confusion matrices
-\item Calculate precision and recall
-\item Plot ROC curves
-\item Handle class imbalance
+\item Build and interpret confusion matrices
+\item Calculate precision, recall, and F1 score
+\item Plot and interpret ROC curves and AUC
+\item Choose metrics appropriate for your problem
 \end{itemize}
-\bottomnote{Building towards your final project}
+\bottomnote{Finance Application: Evaluating fraud detection and default prediction models}
 \end{frame}
 
 
 \begin{frame}[t]{Confusion Matrix}
+\textbf{The Foundation of Classification Metrics}
+\begin{itemize}
+\item 2x2 table: TP, TN, FP, FN (True/False Positive/Negative)
+\item All other metrics derive from these four numbers
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{01_confusion_matrix/chart.pdf}
+\includegraphics[width=0.40\textwidth]{01_confusion_matrix/chart.pdf}
 \end{center}
+\bottomnote{TP = correct positive, FP = false alarm (Type I), FN = missed positive (Type II)}
 \end{frame}
 
 
-\begin{frame}[t]{Accuracy Problems}
+\begin{frame}[t]{The Accuracy Trap}
+\textbf{When Accuracy Misleads}
+\begin{itemize}
+\item 1\% fraud rate: predicting ``no fraud'' gives 99\% accuracy
+\item But you catch zero frauds -- useless model
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{02_accuracy_problems/chart.pdf}
+\includegraphics[width=0.55\textwidth]{02_accuracy_problems/chart.pdf}
 \end{center}
+\bottomnote{Rule: Never use accuracy alone when classes are imbalanced}
 \end{frame}
 
 
-\begin{frame}[t]{Precision Recall}
+\begin{frame}[t]{Precision and Recall}
+\textbf{Two Perspectives on Model Quality}
+\begin{itemize}
+\item Precision = TP / (TP + FP) -- ``Of predicted positives, how many correct?''
+\item Recall = TP / (TP + FN) -- ``Of actual positives, how many found?''
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{03_precision_recall/chart.pdf}
+\includegraphics[width=0.55\textwidth]{03_precision_recall/chart.pdf}
 \end{center}
+\bottomnote{Trade-off: High threshold = high precision, low recall. Low threshold = opposite.}
 \end{frame}
 
 
 \begin{frame}[t]{F1 Score}
+\textbf{Balancing Precision and Recall}
+\begin{itemize}
+\item F1 = $\frac{2 \cdot \text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}$ -- harmonic mean
+\item Single number when you need both precision and recall
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{04_f1_score/chart.pdf}
+\includegraphics[width=0.55\textwidth]{04_f1_score/chart.pdf}
 \end{center}
+\bottomnote{F1 = 0 if either precision or recall is 0. Max F1 = 1 (perfect).}
 \end{frame}
 
 
-\begin{frame}[t]{Roc Curve}
+\begin{frame}[t]{ROC Curve}
+\textbf{Performance Across All Thresholds}
+\begin{itemize}
+\item X-axis: False Positive Rate (FPR). Y-axis: True Positive Rate (Recall)
+\item Each point is a different decision threshold
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{05_roc_curve/chart.pdf}
+\includegraphics[width=0.55\textwidth]{05_roc_curve/chart.pdf}
 \end{center}
+\bottomnote{Perfect classifier: curve goes to top-left corner (TPR=1, FPR=0)}
 \end{frame}
 
 
-\begin{frame}[t]{Auc Interpretation}
+\begin{frame}[t]{AUC Interpretation}
+\textbf{Area Under the ROC Curve}
+\begin{itemize}
+\item AUC = 0.5: random guessing. AUC = 1.0: perfect separation
+\item Interpretation: probability that model ranks positive higher than negative
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{06_auc_interpretation/chart.pdf}
+\includegraphics[width=0.55\textwidth]{06_auc_interpretation/chart.pdf}
 \end{center}
+\bottomnote{Industry benchmarks: AUC $>$ 0.7 acceptable, $>$ 0.8 good, $>$ 0.9 excellent}
 \end{frame}
 
 
 \begin{frame}[t]{Threshold Tuning}
+\textbf{Choosing the Right Operating Point}
+\begin{itemize}
+\item Default threshold (0.5) is rarely optimal
+\item Tune based on business costs: cost of FP vs cost of FN
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{07_threshold_tuning/chart.pdf}
+\includegraphics[width=0.55\textwidth]{07_threshold_tuning/chart.pdf}
 \end{center}
+\bottomnote{Example: Fraud costs \$1000, investigation costs \$10 -- lower threshold is better}
 \end{frame}
 
 
 \begin{frame}[t]{Finance Classification}
+\textbf{Metrics for Financial Problems}
+\begin{itemize}
+\item Default prediction: high recall (catch all defaults), accept lower precision
+\item Trading signals: high precision (avoid false signals), accept lower recall
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{08_finance_classification/chart.pdf}
+\includegraphics[width=0.55\textwidth]{08_finance_classification/chart.pdf}
 \end{center}
+\bottomnote{Match metric to cost structure: what's worse, missing a default or false alarm?}
+\end{frame}
+
+
+\begin{frame}[t]{Hands-On Exercise (25 min)}
+\textbf{Task: Evaluate a Default Prediction Model}
+\begin{enumerate}
+\item Fit logistic regression on credit data (target: default yes/no)
+\item Generate confusion matrix with \texttt{confusion\_matrix()}
+\item Calculate precision, recall, F1 using \texttt{classification\_report()}
+\item Plot ROC curve and calculate AUC
+\item Try thresholds 0.3 and 0.7 -- how do metrics change?
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Deliverable:} Confusion matrix heatmap + ROC curve with AUC annotation.
+\bottomnote{Extension: Calculate expected cost at each threshold using custom cost matrix}
 \end{frame}
 
 
 \begin{frame}[t]{Lesson Summary}
+\textbf{Problem Solved:}
+We now have a toolkit of metrics beyond accuracy for proper model evaluation.
+
+\vspace{0.3em}
 \textbf{Key Takeaways:}
 \begin{itemize}
-\item Build confusion matrices
-\item Calculate precision and recall
-\item Plot ROC curves
-\item Handle class imbalance
+\item Confusion matrix: TP, TN, FP, FN -- foundation of all metrics
+\item Precision = quality of positives, Recall = coverage of positives
+\item ROC/AUC: threshold-independent performance measure
+\item Choose metrics based on business costs
 \end{itemize}
-\bottomnote{Apply these skills in your final project}
+
+\vspace{0.3em}
+\textbf{Next Lesson:} Class Imbalance (L28) -- handling rare events
+\bottomnote{Memory: Precision = Positive predictions that are correct. Recall = Positives that we Recovered.}
 \end{frame}
 
 \end{document}

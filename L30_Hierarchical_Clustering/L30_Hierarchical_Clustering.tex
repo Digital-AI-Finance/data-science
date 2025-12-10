@@ -29,82 +29,159 @@
 \end{frame}
 
 \begin{frame}[t]{Learning Objectives}
+\textbf{The Problem:}
+K-Means requires choosing K upfront. What if we want to see the full hierarchy
+of cluster relationships at all levels?
+
+\vspace{0.3em}
 \textbf{After this lesson, you will be able to:}
 \begin{itemize}
-\item Build dendrograms
-\item Choose linkage methods
-\item Cut dendrograms for clusters
-\item Apply to portfolio construction
+\item Build and interpret dendrograms
+\item Choose between linkage methods (single, complete, ward)
+\item Cut dendrograms to obtain flat clusters
+\item Apply hierarchical clustering to portfolio construction
 \end{itemize}
-\bottomnote{Building towards your final project}
+\bottomnote{Finance Application: Hierarchical Risk Parity (HRP) portfolio optimization}
 \end{frame}
 
 
 \begin{frame}[t]{Hierarchical Concept}
+\textbf{Building a Tree of Clusters}
+\begin{itemize}
+\item Agglomerative: start with N clusters, merge closest pairs
+\item Result: nested hierarchy showing relationships at all scales
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{01_hierarchical_concept/chart.pdf}
+\includegraphics[width=0.55\textwidth]{01_hierarchical_concept/chart.pdf}
 \end{center}
+\bottomnote{Advantage over K-Means: no need to specify K in advance}
 \end{frame}
 
 
 \begin{frame}[t]{Linkage Methods}
+\textbf{How to Measure Cluster Distance?}
+\begin{itemize}
+\item Single: min distance between clusters (chains)
+\item Complete: max distance (compact clusters)
+\item Ward: minimize variance increase (balanced)
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{02_linkage_methods/chart.pdf}
+\includegraphics[width=0.55\textwidth]{02_linkage_methods/chart.pdf}
 \end{center}
+\bottomnote{Default recommendation: Ward linkage for most applications}
 \end{frame}
 
 
 \begin{frame}[t]{Dendrogram}
+\textbf{Visualizing the Hierarchy}
+\begin{itemize}
+\item Y-axis: distance at which clusters merge
+\item X-axis: individual observations (leaves)
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{03_dendrogram/chart.pdf}
+\includegraphics[width=0.55\textwidth]{03_dendrogram/chart.pdf}
 \end{center}
+\bottomnote{Read dendrograms bottom-up: similar items merge early, different items merge late}
 \end{frame}
 
 
-\begin{frame}[t]{Cutting Tree}
+\begin{frame}[t]{Cutting the Tree}
+\textbf{From Hierarchy to Flat Clusters}
+\begin{itemize}
+\item Draw horizontal line at chosen height -- clusters below are groups
+\item Higher cut = fewer clusters, lower cut = more clusters
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{04_cutting_tree/chart.pdf}
+\includegraphics[width=0.55\textwidth]{04_cutting_tree/chart.pdf}
 \end{center}
+\bottomnote{Use \texttt{fcluster(Z, t=height, criterion='distance')} to cut in scipy}
 \end{frame}
 
 
-\begin{frame}[t]{Agglomerative}
+\begin{frame}[t]{Agglomerative Clustering}
+\textbf{sklearn Implementation}
+\begin{itemize}
+\item \texttt{from sklearn.cluster import AgglomerativeClustering}
+\item Specify \texttt{n\_clusters} or \texttt{distance\_threshold}
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{05_agglomerative/chart.pdf}
+\includegraphics[width=0.55\textwidth]{05_agglomerative/chart.pdf}
 \end{center}
+\bottomnote{For dendrogram plotting, use scipy.cluster.hierarchy instead}
 \end{frame}
 
 
-\begin{frame}[t]{Correlation Clustering}
+\begin{frame}[t]{Correlation-Based Clustering}
+\textbf{Using Correlation as Similarity}
+\begin{itemize}
+\item Distance = $1 - \text{correlation}$ (or $\sqrt{2(1-\rho)}$)
+\item Cluster assets by return correlation patterns
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{06_correlation_clustering/chart.pdf}
+\includegraphics[width=0.55\textwidth]{06_correlation_clustering/chart.pdf}
 \end{center}
+\bottomnote{Finance standard: cluster correlation matrix to find asset groups}
 \end{frame}
 
 
-\begin{frame}[t]{Cluster Comparison}
+\begin{frame}[t]{Comparison with K-Means}
+\textbf{When to Use Which?}
+\begin{itemize}
+\item K-Means: faster, need K, spherical clusters
+\item Hierarchical: slower, visual hierarchy, any cluster shape
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{07_cluster_comparison/chart.pdf}
+\includegraphics[width=0.55\textwidth]{07_cluster_comparison/chart.pdf}
 \end{center}
+\bottomnote{Use hierarchical for exploratory analysis, K-Means for production}
 \end{frame}
 
 
 \begin{frame}[t]{Portfolio Clustering}
+\textbf{Hierarchical Risk Parity (HRP)}
+\begin{itemize}
+\item Cluster assets by correlation, then allocate within/across clusters
+\item More robust than mean-variance optimization
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{08_portfolio_clustering/chart.pdf}
+\includegraphics[width=0.55\textwidth]{08_portfolio_clustering/chart.pdf}
 \end{center}
+\bottomnote{HRP: Modern portfolio construction using hierarchical clustering}
+\end{frame}
+
+
+\begin{frame}[t]{Hands-On Exercise (25 min)}
+\textbf{Task: Build Asset Hierarchy}
+\begin{enumerate}
+\item Calculate correlation matrix for 20 stocks (1 year daily returns)
+\item Convert to distance matrix: $d = \sqrt{2(1-\rho)}$
+\item Build dendrogram with Ward linkage
+\item Cut at 2-3 different heights -- compare resulting clusters
+\item Label clusters by dominant sector
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Deliverable:} Dendrogram with cluster cut lines annotated.
+\bottomnote{Extension: Implement simple HRP allocation based on your clusters}
 \end{frame}
 
 
 \begin{frame}[t]{Lesson Summary}
+\textbf{Problem Solved:}
+We can now discover hierarchical relationships and create clusters at any granularity.
+
+\vspace{0.3em}
 \textbf{Key Takeaways:}
 \begin{itemize}
-\item Build dendrograms
-\item Choose linkage methods
-\item Cut dendrograms for clusters
-\item Apply to portfolio construction
+\item Hierarchical clustering builds a tree (dendrogram)
+\item Linkage method matters: Ward for balanced clusters
+\item Cut dendrogram at desired height to get flat clusters
+\item Finance: correlation-based clustering for portfolio construction
 \end{itemize}
-\bottomnote{Apply these skills in your final project}
+
+\vspace{0.3em}
+\textbf{Next Lesson:} PCA (L31) -- reducing dimensions while preserving information
+\bottomnote{Memory: Dendrogram = tree. Cut horizontally to get clusters. Ward = balanced.}
 \end{frame}
 
 \end{document}

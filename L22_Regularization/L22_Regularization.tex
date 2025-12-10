@@ -29,82 +29,152 @@
 \end{frame}
 
 \begin{frame}[t]{Learning Objectives}
+\textbf{The Problem:}
+With many predictors, our model can memorize noise instead of learning patterns.
+How do we build models that generalize to unseen data?
+
+\vspace{0.3em}
 \textbf{After this lesson, you will be able to:}
 \begin{itemize}
-\item Apply Ridge (L2) regularization
-\item Apply Lasso (L1) for feature selection
-\item Tune lambda with cross-validation
-\item Handle multicollinearity
+\item Recognize overfitting and its causes
+\item Apply Ridge (L2) regularization to shrink coefficients
+\item Apply Lasso (L1) for automatic feature selection
+\item Tune the regularization strength with cross-validation
 \end{itemize}
-\bottomnote{Building towards your final project}
+\bottomnote{Finance Application: Building robust factor models with many correlated predictors}
 \end{frame}
 
 
-\begin{frame}[t]{Overfitting Visual}
+\begin{frame}[t]{The Overfitting Problem}
+\textbf{When Models Memorize Instead of Learn}
+\begin{itemize}
+\item High training accuracy but poor test performance
+\item Complex models fit noise in the training data
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{01_overfitting_visual/chart.pdf}
+\includegraphics[width=0.55\textwidth]{01_overfitting_visual/chart.pdf}
 \end{center}
+\bottomnote{Red flag: If train error keeps dropping but test error rises, you're overfitting}
 \end{frame}
 
 
-\begin{frame}[t]{Ridge Concept}
+\begin{frame}[t]{Ridge Regression (L2)}
+\textbf{Shrink All Coefficients Toward Zero}
+\begin{itemize}
+\item Add penalty: $\text{Loss} = \sum(y - \hat{y})^2 + \lambda\sum\beta_j^2$
+\item Large $\lambda$ = stronger shrinkage, simpler model
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{02_ridge_concept/chart.pdf}
+\includegraphics[width=0.55\textwidth]{02_ridge_concept/chart.pdf}
 \end{center}
+\bottomnote{Ridge keeps all features but reduces their influence -- good for multicollinearity}
 \end{frame}
 
 
-\begin{frame}[t]{Lasso Concept}
+\begin{frame}[t]{Lasso Regression (L1)}
+\textbf{Some Coefficients Go to Exactly Zero}
+\begin{itemize}
+\item Add penalty: $\text{Loss} = \sum(y - \hat{y})^2 + \lambda\sum|\beta_j|$
+\item L1 penalty creates sparse solutions (automatic feature selection)
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{03_lasso_concept/chart.pdf}
+\includegraphics[width=0.55\textwidth]{03_lasso_concept/chart.pdf}
 \end{center}
+\bottomnote{Lasso eliminates irrelevant features -- use when you suspect many predictors are useless}
 \end{frame}
 
 
 \begin{frame}[t]{Coefficient Paths}
+\textbf{How Coefficients Change with Lambda}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{04_coefficient_paths/chart.pdf}
+\includegraphics[width=0.65\textwidth]{04_coefficient_paths/chart.pdf}
 \end{center}
+\bottomnote{As $\lambda$ increases, coefficients shrink. Lasso drives some to zero; Ridge does not.}
 \end{frame}
 
 
-\begin{frame}[t]{Lambda Tuning}
+\begin{frame}[t]{Tuning Lambda}
+\textbf{Finding the Right Penalty Strength}
+\begin{itemize}
+\item Too small: overfitting (model too complex)
+\item Too large: underfitting (model too simple)
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{05_lambda_tuning/chart.pdf}
+\includegraphics[width=0.55\textwidth]{05_lambda_tuning/chart.pdf}
 \end{center}
+\bottomnote{Use cross-validation to find the lambda that minimizes test error}
 \end{frame}
 
 
-\begin{frame}[t]{Cross Validation}
+\begin{frame}[t]{Cross-Validation for Lambda}
+\textbf{sklearn Makes It Easy}
+\begin{itemize}
+\item \texttt{RidgeCV} and \texttt{LassoCV} automatically search lambda values
+\item K-fold CV: split data K ways, train on K-1, test on 1, average
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{06_cross_validation/chart.pdf}
+\includegraphics[width=0.55\textwidth]{06_cross_validation/chart.pdf}
 \end{center}
+\bottomnote{Rule: Use \texttt{RidgeCV(alphas=[0.1, 1, 10, 100])} to search logarithmically}
 \end{frame}
 
 
-\begin{frame}[t]{Feature Selection}
+\begin{frame}[t]{Feature Selection with Lasso}
+\textbf{Which Predictors Actually Matter?}
+\begin{itemize}
+\item Non-zero Lasso coefficients = selected features
+\item Zero coefficients = features eliminated by the model
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{07_feature_selection/chart.pdf}
+\includegraphics[width=0.55\textwidth]{07_feature_selection/chart.pdf}
 \end{center}
+\bottomnote{Finance insight: Lasso often keeps 3-5 factors from a candidate set of 20+}
 \end{frame}
 
 
-\begin{frame}[t]{Finance Regularization}
+\begin{frame}[t]{Finance Application: Factor Models}
+\textbf{Building Robust Return Predictions}
+\begin{itemize}
+\item Many candidate factors are correlated (value, quality, momentum...)
+\item Regularization prevents unstable, extreme factor weights
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{08_finance_regularization/chart.pdf}
+\includegraphics[width=0.55\textwidth]{08_finance_regularization/chart.pdf}
 \end{center}
+\bottomnote{Industry practice: Regularized regression for combining alpha signals}
+\end{frame}
+
+
+\begin{frame}[t]{Hands-On Exercise (25 min)}
+\textbf{Task: Compare Ridge vs Lasso on Multi-Factor Data}
+\begin{enumerate}
+\item Create synthetic data with 20 features (only 5 are truly predictive)
+\item Fit OLS, Ridge, and Lasso models
+\item Compare test set $R^2$ for each model
+\item Plot Lasso coefficients -- which features were selected?
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Deliverable:} Bar chart of coefficients comparing OLS vs Ridge vs Lasso.
+\bottomnote{Extension: Use LassoCV to find optimal lambda and report selected features}
 \end{frame}
 
 
 \begin{frame}[t]{Lesson Summary}
+\textbf{Problem Solved:}
+Regularization prevents overfitting when we have many predictors or limited data.
+
+\vspace{0.3em}
 \textbf{Key Takeaways:}
 \begin{itemize}
-\item Apply Ridge (L2) regularization
-\item Apply Lasso (L1) for feature selection
-\item Tune lambda with cross-validation
-\item Handle multicollinearity
+\item Ridge (L2) shrinks all coefficients -- handles multicollinearity
+\item Lasso (L1) sets some coefficients to zero -- automatic feature selection
+\item Use cross-validation (RidgeCV, LassoCV) to tune $\lambda$
 \end{itemize}
-\bottomnote{Apply these skills in your final project}
+
+\vspace{0.3em}
+\textbf{Next Lesson:} Regression Metrics (L23) -- how do we measure model quality?
+\bottomnote{Memory: Ridge = Ridge keeps all features. Lasso = Lasso Loses features (L for Lose).}
 \end{frame}
 
 \end{document}

@@ -29,82 +29,158 @@
 \end{frame}
 
 \begin{frame}[t]{Learning Objectives}
+\textbf{The Problem:}
+CAPM uses only market beta, but stocks also respond to size, value, and momentum.
+How do we capture multiple sources of systematic risk?
+
+\vspace{0.3em}
 \textbf{After this lesson, you will be able to:}
 \begin{itemize}
-\item Build multi-factor regression
-\item Understand Fama-French factors
-\item Interpret factor loadings
-\item Create complete ML pipelines
+\item Build multi-factor regression models
+\item Understand Fama-French factors (SMB, HML)
+\item Interpret factor loadings and alpha
+\item Create complete ML pipelines with sklearn
 \end{itemize}
-\bottomnote{Building towards your final project}
+\bottomnote{Finance Application: Decomposing returns into systematic factors for attribution}
 \end{frame}
 
 
 \begin{frame}[t]{Factor Concept}
+\textbf{From Single to Multiple Risk Sources}
+\begin{itemize}
+\item CAPM: $R_i - R_f = \alpha + \beta_M(R_M - R_f)$ -- only market risk
+\item Multi-factor: Add size, value, momentum as additional explanatory variables
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{01_factor_concept/chart.pdf}
+\includegraphics[width=0.55\textwidth]{01_factor_concept/chart.pdf}
 \end{center}
+\bottomnote{Key insight: Different stocks have different exposures to different risk factors}
 \end{frame}
 
 
-\begin{frame}[t]{Fama French}
+\begin{frame}[t]{Fama-French Factors}
+\textbf{The Classic Three-Factor Model}
+\begin{itemize}
+\item \textbf{SMB} (Small Minus Big): Small caps outperform large caps historically
+\item \textbf{HML} (High Minus Low): Value stocks outperform growth stocks
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{02_fama_french/chart.pdf}
+\includegraphics[width=0.55\textwidth]{02_fama_french/chart.pdf}
 \end{center}
+\bottomnote{Nobel Prize (2013): Fama showed these factors explain returns better than CAPM alone}
 \end{frame}
 
 
 \begin{frame}[t]{Factor Loadings}
+\textbf{How Much Exposure Does a Stock Have?}
+\begin{itemize}
+\item Each stock has different sensitivities to each factor
+\item Loading = regression coefficient on that factor
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{03_factor_loadings/chart.pdf}
+\includegraphics[width=0.55\textwidth]{03_factor_loadings/chart.pdf}
 \end{center}
+\bottomnote{Example: TSLA has high market beta but negative HML (growth stock, not value)}
 \end{frame}
 
 
-\begin{frame}[t]{Alpha Beta}
+\begin{frame}[t]{Alpha and Beta Decomposition}
+\textbf{Separating Skill from Risk Exposure}
+\begin{itemize}
+\item $\alpha$: Return not explained by factors (manager skill or mispricing)
+\item Multi-factor alpha is ``purer'' than CAPM alpha
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{04_alpha_beta/chart.pdf}
+\includegraphics[width=0.55\textwidth]{04_alpha_beta/chart.pdf}
 \end{center}
+\bottomnote{Industry standard: Report alpha after controlling for Fama-French factors}
 \end{frame}
 
 
-\begin{frame}[t]{Multi Factor}
+\begin{frame}[t]{Multi-Factor Regression}
+\textbf{Implementation in Python}
+\begin{itemize}
+\item Same sklearn API: \texttt{LinearRegression().fit(X, y)} where X has multiple columns
+\item Each coefficient is a factor loading
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{05_multi_factor/chart.pdf}
+\includegraphics[width=0.55\textwidth]{05_multi_factor/chart.pdf}
 \end{center}
+\bottomnote{X matrix columns: [Mkt-RF, SMB, HML] -- intercept is alpha}
 \end{frame}
 
 
-\begin{frame}[t]{Pipeline Sklearn}
+\begin{frame}[t]{sklearn Pipeline}
+\textbf{Combining Preprocessing and Modeling}
+\begin{itemize}
+\item \texttt{Pipeline([('scaler', StandardScaler()), ('reg', Ridge())])}
+\item Prevents data leakage: scaler fits only on training data
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{06_pipeline_sklearn/chart.pdf}
+\includegraphics[width=0.45\textwidth]{06_pipeline_sklearn/chart.pdf}
 \end{center}
+\bottomnote{Best practice: Always use pipelines for reproducible workflows}
 \end{frame}
 
 
 \begin{frame}[t]{Model Persistence}
+\textbf{Saving and Loading Trained Models}
+\begin{itemize}
+\item \texttt{joblib.dump(model, 'model.pkl')} -- save to disk
+\item \texttt{model = joblib.load('model.pkl')} -- reload for production
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{07_model_persistence/chart.pdf}
+\includegraphics[width=0.50\textwidth]{07_model_persistence/chart.pdf}
 \end{center}
+\bottomnote{Deployment: Train once, deploy saved model to production}
 \end{frame}
 
 
-\begin{frame}[t]{Portfolio Factors}
+\begin{frame}[t]{Portfolio Factor Attribution}
+\textbf{Where Did Your Returns Come From?}
+\begin{itemize}
+\item Decompose portfolio returns into factor contributions
+\item Shows whether performance came from market timing, factor bets, or alpha
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{08_portfolio_factors/chart.pdf}
+\includegraphics[width=0.55\textwidth]{08_portfolio_factors/chart.pdf}
 \end{center}
+\bottomnote{Risk management: Understand your factor exposures before they surprise you}
+\end{frame}
+
+
+\begin{frame}[t]{Hands-On Exercise (25 min)}
+\textbf{Task: Build a Fama-French Factor Model}
+\begin{enumerate}
+\item Download Fama-French 3-factor data from Kenneth French's website
+\item Merge with your stock returns (AAPL or similar)
+\item Fit multi-factor regression: stock returns vs [Mkt-RF, SMB, HML]
+\item Interpret: What are the factor loadings? Is there alpha?
+\item Compare $R^2$ to single-factor CAPM model
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Deliverable:} Table of factor loadings + comparison of $R^2$ values.
+\bottomnote{Extension: Add momentum (UMD) as a fourth factor -- does $R^2$ improve?}
 \end{frame}
 
 
 \begin{frame}[t]{Lesson Summary}
+\textbf{Problem Solved:}
+We can now decompose stock returns into multiple systematic factors, giving better risk attribution than CAPM alone.
+
+\vspace{0.3em}
 \textbf{Key Takeaways:}
 \begin{itemize}
-\item Build multi-factor regression
-\item Understand Fama-French factors
-\item Interpret factor loadings
-\item Create complete ML pipelines
+\item Fama-French: Market + SMB (size) + HML (value)
+\item Factor loadings = regression coefficients on each factor
+\item Alpha after factors = true outperformance
+\item sklearn pipelines ensure reproducible workflows
 \end{itemize}
-\bottomnote{Apply these skills in your final project}
+
+\vspace{0.3em}
+\textbf{Next Lesson:} Classification (L25) -- predicting categories instead of numbers
+\bottomnote{Memory: SMB = Small Minus Big (size), HML = High Minus Low (value)}
 \end{frame}
 
 \end{document}

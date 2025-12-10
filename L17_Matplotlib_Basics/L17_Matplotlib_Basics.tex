@@ -40,77 +40,270 @@
 \end{frame}
 
 
-\begin{frame}[t]{Line Plot}
+\begin{frame}[t]{Basic Line Plot}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{01_line_plot/chart.pdf}
+\includegraphics[width=0.75\textwidth]{01a_basic_line/chart.pdf}
 \end{center}
-\bottomnote{Statistical foundation for data-driven decisions}
+\bottomnote{plt.plot(x, y) for simple line charts}
 \end{frame}
 
 
-\begin{frame}[t]{Bar Chart}
+\begin{frame}[t]{Multiple Lines}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{02_bar_chart/chart.pdf}
+\includegraphics[width=0.75\textwidth]{01b_multiple_lines/chart.pdf}
 \end{center}
-\bottomnote{Statistical foundation for data-driven decisions}
+\bottomnote{Comparing multiple time series}
 \end{frame}
 
 
-\begin{frame}[t]{Histogram}
+\begin{frame}[t]{Line with Markers}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{03_histogram/chart.pdf}
+\includegraphics[width=0.75\textwidth]{01c_line_markers/chart.pdf}
 \end{center}
-\bottomnote{Statistical foundation for data-driven decisions}
+\bottomnote{Adding data point markers}
 \end{frame}
 
 
-\begin{frame}[t]{Scatter Plot}
+\begin{frame}[t]{Fill Between}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{04_scatter_plot/chart.pdf}
+\includegraphics[width=0.75\textwidth]{01d_fill_between/chart.pdf}
 \end{center}
-\bottomnote{Statistical foundation for data-driven decisions}
+\bottomnote{Shading area between lines}
 \end{frame}
 
 
-\begin{frame}[t]{Subplots}
+\begin{frame}[t]{Vertical Bar}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{05_subplots/chart.pdf}
+\includegraphics[width=0.75\textwidth]{02a_vertical_bar/chart.pdf}
 \end{center}
-\bottomnote{Statistical foundation for data-driven decisions}
+\bottomnote{Comparing categorical values}
 \end{frame}
 
 
-\begin{frame}[t]{Customization}
+\begin{frame}[t]{Horizontal Bar}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{06_customization/chart.pdf}
+\includegraphics[width=0.75\textwidth]{02b_horizontal_bar/chart.pdf}
 \end{center}
-\bottomnote{Statistical foundation for data-driven decisions}
+\bottomnote{Better for long category names}
 \end{frame}
 
 
-\begin{frame}[t]{Annotations}
+\begin{frame}[t]{Grouped Bar}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{07_annotations/chart.pdf}
+\includegraphics[width=0.75\textwidth]{02c_grouped_bar/chart.pdf}
 \end{center}
-\bottomnote{Statistical foundation for data-driven decisions}
+\bottomnote{Comparing multiple series by category}
 \end{frame}
 
 
-\begin{frame}[t]{Finance Charts}
+\begin{frame}[t]{Stacked Bar}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{08_finance_charts/chart.pdf}
+\includegraphics[width=0.75\textwidth]{02d_stacked_bar/chart.pdf}
 \end{center}
-\bottomnote{Statistical foundation for data-driven decisions}
+\bottomnote{Showing composition of totals}
+\end{frame}
+
+
+\begin{frame}[t]{Basic Histogram}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{03a_basic_histogram/chart.pdf}
+\end{center}
+\bottomnote{Distribution with mean and median}
+\end{frame}
+
+
+\begin{frame}[t]{Density Histogram}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{03b_density_histogram/chart.pdf}
+\end{center}
+\bottomnote{Normalized with PDF overlay}
+\end{frame}
+
+
+\begin{frame}[t]{Comparing Distributions}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{03c_comparing_distributions/chart.pdf}
+\end{center}
+\bottomnote{Multiple overlapping histograms}
+\end{frame}
+
+
+\begin{frame}[t]{Cumulative Histogram}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{03d_cumulative_histogram/chart.pdf}
+\end{center}
+\bottomnote{Frequency with CDF}
+\end{frame}
+
+
+\begin{frame}[t]{Basic Scatter}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{04a_basic_scatter/chart.pdf}
+\end{center}
+\bottomnote{Simple X vs Y relationship}
+\end{frame}
+
+
+\begin{frame}[t]{Scatter with Regression}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{04b_scatter_regression/chart.pdf}
+\end{center}
+\bottomnote{Adding trend line}
+\end{frame}
+
+
+\begin{frame}[t]{Multidimensional Scatter}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{04c_multidimensional_scatter/chart.pdf}
+\end{center}
+\bottomnote{Size and color encoding}
+\end{frame}
+
+
+\begin{frame}[t]{Grouped Scatter}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{04d_grouped_scatter/chart.pdf}
+\end{center}
+\bottomnote{Comparing categories}
+\end{frame}
+
+
+\begin{frame}[t]{add\_subplot (sin)}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{05a_add_subplot_sin/chart.pdf}
+\end{center}
+\bottomnote{fig.add\_subplot(rows, cols, index)}
+\end{frame}
+
+
+\begin{frame}[t]{add\_subplot (cos)}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{05b_add_subplot_cos/chart.pdf}
+\end{center}
+\bottomnote{Multiple axes in one figure}
+\end{frame}
+
+
+\begin{frame}[t]{Spanning Subplot}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{05c_spanning_subplot/chart.pdf}
+\end{center}
+\bottomnote{Subplot spanning multiple positions}
+\end{frame}
+
+
+\begin{frame}[t]{Subplots Iteration}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{05d_subplots_iteration/chart.pdf}
+\end{center}
+\bottomnote{plt.subplots(rows, cols) and indexing}
+\end{frame}
+
+
+\begin{frame}[t]{Line Styles}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{06a_line_styles/chart.pdf}
+\end{center}
+\bottomnote{Solid, dashed, dotted, markers}
+\end{frame}
+
+
+\begin{frame}[t]{Transparency}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{06b_transparency/chart.pdf}
+\end{center}
+\bottomnote{Using alpha for layering}
+\end{frame}
+
+
+\begin{frame}[t]{Axis Customization}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{06c_axis_customization/chart.pdf}
+\end{center}
+\bottomnote{Limits, ticks, labels}
+\end{frame}
+
+
+\begin{frame}[t]{Annotations and Text}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{06d_annotations_text/chart.pdf}
+\end{center}
+\bottomnote{Highlighting key points}
+\end{frame}
+
+
+\begin{frame}[t]{Arrow Styles}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{07a_arrow_styles/chart.pdf}
+\end{center}
+\bottomnote{Different annotation arrows}
+\end{frame}
+
+
+\begin{frame}[t]{Text Boxes}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{07b_text_boxes/chart.pdf}
+\end{center}
+\bottomnote{bbox styles for annotations}
+\end{frame}
+
+
+\begin{frame}[t]{Event Markers}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{07c_event_markers/chart.pdf}
+\end{center}
+\bottomnote{Highlighting specific dates}
+\end{frame}
+
+
+\begin{frame}[t]{Statistics Box}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{07d_statistics_box/chart.pdf}
+\end{center}
+\bottomnote{Key metrics annotation}
+\end{frame}
+
+
+\begin{frame}[t]{Price + Volume}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{08a_price_volume/chart.pdf}
+\end{center}
+\bottomnote{Dual axis chart}
+\end{frame}
+
+
+\begin{frame}[t]{Drawdown}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{08b_drawdown/chart.pdf}
+\end{center}
+\bottomnote{Visualizing losses from peak}
+\end{frame}
+
+
+\begin{frame}[t]{Rolling Sharpe}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{08c_rolling_sharpe/chart.pdf}
+\end{center}
+\bottomnote{Performance over time}
+\end{frame}
+
+
+\begin{frame}[t]{Cumulative Returns}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{08d_cumulative_returns/chart.pdf}
+\end{center}
+\bottomnote{Strategy comparison}
 \end{frame}
 
 
 \begin{frame}[t]{Lesson Summary}
 \textbf{Key Takeaways:}
 \begin{itemize}
-\item Create line, bar, and scatter plots
-\item Customize colors, labels, legends
-\item Build multi-panel figures
-\item Add annotations and formatting
+\item Line plots for time series, bar charts for categories
+\item Histograms show distributions, scatter plots show relationships
+\item Subplots combine multiple views
+\item Customization: colors, styles, annotations, text boxes
+\item Finance applications: price/volume, drawdown, Sharpe, returns
 \end{itemize}
 \bottomnote{Statistics + Visualization = Data Science foundation}
 \end{frame}

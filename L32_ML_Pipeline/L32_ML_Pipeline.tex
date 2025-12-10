@@ -29,82 +29,159 @@
 \end{frame}
 
 \begin{frame}[t]{Learning Objectives}
+\textbf{The Problem:}
+We've learned many techniques separately. How do we combine preprocessing,
+feature engineering, and modeling into a reproducible, leak-free workflow?
+
+\vspace{0.3em}
 \textbf{After this lesson, you will be able to:}
 \begin{itemize}
-\item Build sklearn pipelines
-\item Apply cross-validation properly
-\item Tune hyperparameters
-\item Prevent data leakage
+\item Build sklearn pipelines for end-to-end workflows
+\item Apply cross-validation correctly (avoiding data leakage)
+\item Tune hyperparameters with GridSearchCV and RandomizedSearchCV
+\item Handle time series data with proper train/test splits
 \end{itemize}
-\bottomnote{Building towards your final project}
+\bottomnote{Finance Application: Production-ready ML systems for trading and risk}
 \end{frame}
 
 
 \begin{frame}[t]{Pipeline Concept}
+\textbf{Chaining Steps Together}
+\begin{itemize}
+\item Pipeline = sequence of transformers + final estimator
+\item Each step's output becomes next step's input
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{01_pipeline_concept/chart.pdf}
+\includegraphics[width=0.55\textwidth]{01_pipeline_concept/chart.pdf}
 \end{center}
+\bottomnote{Pipelines ensure transformations are applied consistently to train and test data}
 \end{frame}
 
 
-\begin{frame}[t]{Sklearn Pipeline}
+\begin{frame}[t]{sklearn Pipeline}
+\textbf{Building Your First Pipeline}
+\begin{itemize}
+\item \texttt{Pipeline([('scaler', StandardScaler()), ('model', Ridge())])}
+\item Call \texttt{.fit(X\_train, y\_train)} and \texttt{.predict(X\_test)}
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{02_sklearn_pipeline/chart.pdf}
+\includegraphics[width=0.55\textwidth]{02_sklearn_pipeline/chart.pdf}
 \end{center}
+\bottomnote{Naming convention: ('step\_name', transformer\_object)}
 \end{frame}
 
 
 \begin{frame}[t]{Preprocessing Steps}
+\textbf{Common Transformers}
+\begin{itemize}
+\item StandardScaler, MinMaxScaler for numeric features
+\item OneHotEncoder for categorical features
+\item SimpleImputer for missing values
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{03_preprocessing_steps/chart.pdf}
+\includegraphics[width=0.55\textwidth]{03_preprocessing_steps/chart.pdf}
 \end{center}
+\bottomnote{Use ColumnTransformer to apply different transforms to different columns}
 \end{frame}
 
 
-\begin{frame}[t]{Cross Validation}
+\begin{frame}[t]{Cross-Validation}
+\textbf{Robust Performance Estimation}
+\begin{itemize}
+\item K-Fold: split data K ways, train on K-1, test on 1, rotate
+\item \texttt{cross\_val\_score(pipeline, X, y, cv=5)} returns K scores
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{04_cross_validation/chart.pdf}
+\includegraphics[width=0.55\textwidth]{04_cross_validation/chart.pdf}
 \end{center}
+\bottomnote{CV inside pipeline = transformers fit only on training fold (no leakage)}
 \end{frame}
 
 
-\begin{frame}[t]{Grid Search}
+\begin{frame}[t]{GridSearchCV}
+\textbf{Exhaustive Hyperparameter Search}
+\begin{itemize}
+\item Define parameter grid: \texttt{\{'model\_\_alpha': [0.1, 1, 10]\}}
+\item GridSearchCV tries all combinations with CV
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{05_grid_search/chart.pdf}
+\includegraphics[width=0.55\textwidth]{05_grid_search/chart.pdf}
 \end{center}
+\bottomnote{Access best params via \texttt{grid.best\_params\_} and best score via \texttt{grid.best\_score\_}}
 \end{frame}
 
 
-\begin{frame}[t]{Random Search}
+\begin{frame}[t]{RandomizedSearchCV}
+\textbf{Efficient Search for Large Spaces}
+\begin{itemize}
+\item Sample random combinations instead of exhaustive grid
+\item Specify distributions: \texttt{uniform(0.01, 10)} for continuous params
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{06_random_search/chart.pdf}
+\includegraphics[width=0.55\textwidth]{06_random_search/chart.pdf}
 \end{center}
+\bottomnote{Rule: Use random search when grid has $>$100 combinations}
 \end{frame}
 
 
 \begin{frame}[t]{Time Series Split}
+\textbf{Respecting Temporal Order}
+\begin{itemize}
+\item Standard CV shuffles -- invalid for time series
+\item TimeSeriesSplit: train on past, test on future (rolling)
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{07_time_series_split/chart.pdf}
+\includegraphics[width=0.55\textwidth]{07_time_series_split/chart.pdf}
 \end{center}
+\bottomnote{Finance critical: Never let future data leak into training}
 \end{frame}
 
 
 \begin{frame}[t]{Production Pipeline}
+\textbf{From Development to Deployment}
+\begin{itemize}
+\item Save entire pipeline with \texttt{joblib.dump(pipe, 'model.pkl')}
+\item Load and predict: \texttt{pipe = joblib.load('model.pkl')}
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{08_production_pipeline/chart.pdf}
+\includegraphics[width=0.55\textwidth]{08_production_pipeline/chart.pdf}
 \end{center}
+\bottomnote{Pipeline saves all preprocessing steps -- deploy once, predict anywhere}
+\end{frame}
+
+
+\begin{frame}[t]{Hands-On Exercise (25 min)}
+\textbf{Task: Build End-to-End Prediction Pipeline}
+\begin{enumerate}
+\item Create pipeline: StandardScaler $\rightarrow$ PCA(5) $\rightarrow$ Ridge
+\item Use GridSearchCV to tune \texttt{pca\_\_n\_components} and \texttt{ridge\_\_alpha}
+\item Evaluate with TimeSeriesSplit (5 splits)
+\item Print best parameters and cross-validation score
+\item Save best pipeline to disk with joblib
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Deliverable:} Best params + CV score + saved model file.
+\bottomnote{Extension: Add ColumnTransformer for mixed numeric/categorical features}
 \end{frame}
 
 
 \begin{frame}[t]{Lesson Summary}
+\textbf{Problem Solved:}
+We can now build complete, reproducible ML workflows that prevent data leakage.
+
+\vspace{0.3em}
 \textbf{Key Takeaways:}
 \begin{itemize}
-\item Build sklearn pipelines
-\item Apply cross-validation properly
-\item Tune hyperparameters
-\item Prevent data leakage
+\item Pipelines chain preprocessing and modeling together
+\item Cross-validation estimates generalization performance
+\item GridSearchCV/RandomizedSearchCV for hyperparameter tuning
+\item TimeSeriesSplit for financial data -- never leak future
 \end{itemize}
-\bottomnote{Apply these skills in your final project}
+
+\vspace{0.3em}
+\textbf{Next Lesson:} Perceptron (L33) -- introduction to neural networks
+\bottomnote{Memory: Pipeline = chain. GridSearchCV = try all. TimeSeriesSplit = respect time.}
 \end{frame}
 
 \end{document}

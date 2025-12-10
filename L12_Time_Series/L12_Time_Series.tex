@@ -39,85 +39,253 @@
 \item DateTime index
 \item Resampling (daily to monthly)
 \item Rolling windows
-\item shift() and pct_change()
+\item shift() and pct\_change()
 \item Time series patterns in finance
 \end{itemize}
 \bottomnote{Finance application: Stock data processing and analysis}
 \end{frame}
 
 
-\begin{frame}[t]{Time Series}
+\begin{frame}[t]{Basic Time Series}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{01_time_series/chart.pdf}
+\includegraphics[width=0.75\textwidth]{01a_basic_timeseries/chart.pdf}
 \end{center}
-\bottomnote{Key concept for financial data analysis}
+\bottomnote{Plotting time-indexed data}
+\end{frame}
+
+
+\begin{frame}[t]{Monthly Aggregation}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{01b_monthly_aggregation/chart.pdf}
+\end{center}
+\bottomnote{Summarizing daily data into monthly periods}
+\end{frame}
+
+
+\begin{frame}[t]{Date Slicing}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{01c_date_slicing/chart.pdf}
+\end{center}
+\bottomnote{Selecting data by date range}
+\end{frame}
+
+
+\begin{frame}[t]{Day of Week Patterns}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{01d_day_of_week/chart.pdf}
+\end{center}
+\bottomnote{Analyzing weekday effects}
 \end{frame}
 
 
 \begin{frame}[t]{Datetime Parsing}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{02_datetime_parsing/chart.pdf}
+\includegraphics[width=0.75\textwidth]{02_datetime_parsing/chart.pdf}
 \end{center}
-\bottomnote{Key concept for financial data analysis}
+\bottomnote{Converting strings to datetime objects}
 \end{frame}
 
 
-\begin{frame}[t]{03 Resampling}
+\begin{frame}[t]{Daily Data}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{03_resampling/chart.pdf}
+\includegraphics[width=0.75\textwidth]{03a_daily_data/chart.pdf}
 \end{center}
-\bottomnote{Key concept for financial data analysis}
+\bottomnote{Working with daily frequency}
 \end{frame}
 
 
-\begin{frame}[t]{04 Rolling Window}
+\begin{frame}[t]{Weekly Resampling}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{04_rolling_window/chart.pdf}
+\includegraphics[width=0.75\textwidth]{03b_weekly_resampling/chart.pdf}
 \end{center}
-\bottomnote{Key concept for financial data analysis}
+\bottomnote{Aggregating to weekly frequency}
 \end{frame}
 
 
-\begin{frame}[t]{05 Shift Lag}
+\begin{frame}[t]{Monthly OHLC}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{05_shift_lag/chart.pdf}
+\includegraphics[width=0.75\textwidth]{03c_monthly_ohlc/chart.pdf}
 \end{center}
-\bottomnote{Key concept for financial data analysis}
+\bottomnote{Open-High-Low-Close monthly bars}
 \end{frame}
 
 
-\begin{frame}[t]{06 Pct Change}
+\begin{frame}[t]{Quarterly Resampling}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{06_pct_change/chart.pdf}
+\includegraphics[width=0.75\textwidth]{03d_quarterly/chart.pdf}
 \end{center}
-\bottomnote{Key concept for financial data analysis}
+\bottomnote{Aggregating to quarterly frequency}
 \end{frame}
 
 
-\begin{frame}[t]{07 Components}
+\begin{frame}[t]{Moving Averages}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{07_components/chart.pdf}
+\includegraphics[width=0.75\textwidth]{04a_moving_averages/chart.pdf}
 \end{center}
-\bottomnote{Key concept for financial data analysis}
+\bottomnote{Smoothing with rolling mean}
 \end{frame}
 
 
-\begin{frame}[t]{08 Patterns}
+\begin{frame}[t]{Rolling Volatility}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{08_patterns/chart.pdf}
+\includegraphics[width=0.75\textwidth]{04b_rolling_volatility/chart.pdf}
 \end{center}
-\bottomnote{Key concept for financial data analysis}
+\bottomnote{Measuring time-varying risk}
+\end{frame}
+
+
+\begin{frame}[t]{Bollinger Bands}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{04c_bollinger_bands/chart.pdf}
+\end{center}
+\bottomnote{Trading bands using rolling statistics}
+\end{frame}
+
+
+\begin{frame}[t]{Rolling Channel}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{04d_rolling_channel/chart.pdf}
+\end{center}
+\bottomnote{Price channels with rolling min/max}
+\end{frame}
+
+
+\begin{frame}[t]{Shift Demo}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{05a_shift_demo/chart.pdf}
+\end{center}
+\bottomnote{Basic lag operation}
+\end{frame}
+
+
+\begin{frame}[t]{Multiple Lags}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{05b_multiple_lags/chart.pdf}
+\end{center}
+\bottomnote{Creating multiple lagged features}
+\end{frame}
+
+
+\begin{frame}[t]{Returns with Shift}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{05c_returns_shift/chart.pdf}
+\end{center}
+\bottomnote{Computing returns using shift}
+\end{frame}
+
+
+\begin{frame}[t]{Autocorrelation}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{05d_autocorrelation/chart.pdf}
+\end{center}
+\bottomnote{Serial correlation in returns}
+\end{frame}
+
+
+\begin{frame}[t]{Daily Returns}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{06a_daily_returns/chart.pdf}
+\end{center}
+\bottomnote{Computing percentage changes}
+\end{frame}
+
+
+\begin{frame}[t]{Periods Comparison}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{06b_periods_comparison/chart.pdf}
+\end{center}
+\bottomnote{Different return periods}
+\end{frame}
+
+
+\begin{frame}[t]{Return Distribution}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{06c_return_distribution/chart.pdf}
+\end{center}
+\bottomnote{Statistical properties of returns}
+\end{frame}
+
+
+\begin{frame}[t]{Cumulative Returns}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{06d_cumulative_returns/chart.pdf}
+\end{center}
+\bottomnote{Growth of investment over time}
+\end{frame}
+
+
+\begin{frame}[t]{Original Trend}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{07a_original_trend/chart.pdf}
+\end{center}
+\bottomnote{Identifying the long-term trend}
+\end{frame}
+
+
+\begin{frame}[t]{Seasonal Pattern}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{07b_seasonal_pattern/chart.pdf}
+\end{center}
+\bottomnote{Recurring patterns within periods}
+\end{frame}
+
+
+\begin{frame}[t]{Residuals}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{07c_residuals/chart.pdf}
+\end{center}
+\bottomnote{Random component after decomposition}
+\end{frame}
+
+
+\begin{frame}[t]{Full Decomposition}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{07d_decomposition/chart.pdf}
+\end{center}
+\bottomnote{Trend + Seasonal + Residual}
+\end{frame}
+
+
+\begin{frame}[t]{Mean Reversion}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{08a_mean_reversion/chart.pdf}
+\end{center}
+\bottomnote{Price returning to average}
+\end{frame}
+
+
+\begin{frame}[t]{Momentum}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{08b_momentum/chart.pdf}
+\end{center}
+\bottomnote{Trend-following patterns}
+\end{frame}
+
+
+\begin{frame}[t]{Volatility Clustering}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{08c_volatility_clustering/chart.pdf}
+\end{center}
+\bottomnote{High volatility follows high volatility}
+\end{frame}
+
+
+\begin{frame}[t]{Regime Changes}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{08d_regime_changes/chart.pdf}
+\end{center}
+\bottomnote{Different market conditions}
 \end{frame}
 
 
 \begin{frame}[t]{Lesson Summary}
 \textbf{Key Takeaways:}
 \begin{itemize}
-\item DateTime index
-\item Resampling (daily to monthly)
-\item Rolling windows
-\item shift() and pct_change()
-\item Time series patterns in finance
+\item DateTime index for time series data
+\item Resampling changes data frequency
+\item Rolling windows for moving statistics
+\item shift() creates lags, pct\_change() computes returns
+\item Recognize patterns: trend, seasonality, mean reversion, momentum
 \end{itemize}
 
 \vspace{1em}

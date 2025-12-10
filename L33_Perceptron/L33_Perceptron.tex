@@ -29,82 +29,158 @@
 \end{frame}
 
 \begin{frame}[t]{Learning Objectives}
+\textbf{The Problem:}
+Traditional ML models have fixed architectures. How do neural networks learn?
+Understanding the perceptron is the first step toward deep learning.
+
+\vspace{0.3em}
 \textbf{After this lesson, you will be able to:}
 \begin{itemize}
-\item Understand biological inspiration
-\item Build single perceptron
-\item Recognize linear limitations
-\item Prepare for deep learning
+\item Understand the biological inspiration for neural networks
+\item Build and train a single perceptron
+\item Recognize the limitation: only linearly separable problems
+\item Prepare for multi-layer networks that overcome this
 \end{itemize}
-\bottomnote{Building towards your final project}
+\bottomnote{Finance Application: Foundation for deep learning models in quantitative finance}
 \end{frame}
 
 
 \begin{frame}[t]{Biological Neuron}
+\textbf{Inspiration from the Brain}
+\begin{itemize}
+\item Dendrites receive signals, soma processes, axon outputs
+\item Neuron ``fires'' when input exceeds threshold
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{01_biological_neuron/chart.pdf}
+\includegraphics[width=0.55\textwidth]{01_biological_neuron/chart.pdf}
 \end{center}
+\bottomnote{Perceptron: simplified mathematical model of biological neuron}
 \end{frame}
 
 
 \begin{frame}[t]{Perceptron Model}
+\textbf{The Simplest Neural Network}
+\begin{itemize}
+\item Output: $y = \sigma(\sum w_i x_i + b)$ where $\sigma$ is activation
+\item Weights $w_i$ control importance of each input
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{02_perceptron_model/chart.pdf}
+\includegraphics[width=0.55\textwidth]{02_perceptron_model/chart.pdf}
 \end{center}
+\bottomnote{Single perceptron = logistic regression (same math, different framing)}
 \end{frame}
 
 
 \begin{frame}[t]{Activation Threshold}
+\textbf{When Does the Neuron Fire?}
+\begin{itemize}
+\item Step function: output 1 if weighted sum $> 0$, else 0
+\item Modern: sigmoid, ReLU for smooth gradients
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{03_activation_threshold/chart.pdf}
+\includegraphics[width=0.55\textwidth]{03_activation_threshold/chart.pdf}
 \end{center}
+\bottomnote{Step function: original perceptron. Sigmoid: smooth for gradient descent.}
 \end{frame}
 
 
-\begin{frame}[t]{Linear Boundary}
+\begin{frame}[t]{Linear Decision Boundary}
+\textbf{What Can a Perceptron Learn?}
+\begin{itemize}
+\item Single perceptron creates a linear boundary (hyperplane)
+\item Can separate AND, OR but not more complex patterns
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{04_linear_boundary/chart.pdf}
+\includegraphics[width=0.55\textwidth]{04_linear_boundary/chart.pdf}
 \end{center}
+\bottomnote{Perceptron = linear classifier. Same limitation as logistic regression.}
 \end{frame}
 
 
-\begin{frame}[t]{Xor Problem}
+\begin{frame}[t]{The XOR Problem}
+\textbf{A Famous Limitation}
+\begin{itemize}
+\item XOR is not linearly separable -- no single line can divide it
+\item This limitation stalled neural network research for years
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{05_xor_problem/chart.pdf}
+\includegraphics[width=0.55\textwidth]{05_xor_problem/chart.pdf}
 \end{center}
+\bottomnote{Solution: add hidden layers (multi-layer perceptron) to learn non-linear boundaries}
 \end{frame}
 
 
-\begin{frame}[t]{Perceptron Learning}
+\begin{frame}[t]{Perceptron Learning Rule}
+\textbf{How Weights Are Updated}
+\begin{itemize}
+\item If wrong: $w_{new} = w_{old} + \eta \cdot (y_{true} - y_{pred}) \cdot x$
+\item Learning rate $\eta$ controls step size
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{06_perceptron_learning/chart.pdf}
+\includegraphics[width=0.55\textwidth]{06_perceptron_learning/chart.pdf}
 \end{center}
+\bottomnote{Perceptron learning rule: simple but powerful for linearly separable data}
 \end{frame}
 
 
-\begin{frame}[t]{Convergence}
+\begin{frame}[t]{Convergence Guarantee}
+\textbf{When Will Training Stop?}
+\begin{itemize}
+\item If data is linearly separable, perceptron converges in finite steps
+\item If not separable, it oscillates forever (need multi-layer)
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{07_convergence/chart.pdf}
+\includegraphics[width=0.55\textwidth]{07_convergence/chart.pdf}
 \end{center}
+\bottomnote{Perceptron Convergence Theorem (1962): guaranteed for separable problems}
 \end{frame}
 
 
-\begin{frame}[t]{Finance Perceptron}
+\begin{frame}[t]{Finance Application}
+\textbf{Simple Trading Signals}
+\begin{itemize}
+\item Inputs: momentum, volatility, volume signals
+\item Output: buy (1) or sell (0) decision
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{08_finance_perceptron/chart.pdf}
+\includegraphics[width=0.55\textwidth]{08_finance_perceptron/chart.pdf}
 \end{center}
+\bottomnote{Reality: Financial patterns are rarely linearly separable -- need deeper networks}
+\end{frame}
+
+
+\begin{frame}[t]{Hands-On Exercise (25 min)}
+\textbf{Task: Implement Perceptron from Scratch}
+\begin{enumerate}
+\item Create synthetic linearly separable 2D data
+\item Implement perceptron learning rule in Python (no sklearn)
+\item Train and plot decision boundary at each epoch
+\item Try on XOR data -- observe failure to converge
+\item Compare to sklearn's \texttt{Perceptron} class
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Deliverable:} Animation of boundary evolution + XOR failure plot.
+\bottomnote{Extension: Modify learning rate -- how does convergence speed change?}
 \end{frame}
 
 
 \begin{frame}[t]{Lesson Summary}
+\textbf{Problem Solved:}
+We understand the building block of neural networks and its limitations.
+
+\vspace{0.3em}
 \textbf{Key Takeaways:}
 \begin{itemize}
-\item Understand biological inspiration
-\item Build single perceptron
-\item Recognize linear limitations
-\item Prepare for deep learning
+\item Perceptron: weighted sum + activation = binary output
+\item Only learns linearly separable patterns
+\item XOR problem: needs hidden layers to solve
+\item Foundation for multi-layer perceptrons (MLPs)
 \end{itemize}
-\bottomnote{Apply these skills in your final project}
+
+\vspace{0.3em}
+\textbf{Next Lesson:} MLPs and Activations (L34) -- adding hidden layers
+\bottomnote{Memory: Perceptron = single neuron = linear boundary. XOR needs hidden layers.}
 \end{frame}
 
 \end{document}

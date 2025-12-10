@@ -29,82 +29,158 @@
 \end{frame}
 
 \begin{frame}[t]{Learning Objectives}
+\textbf{The Problem:}
+Fraud occurs in 0.1\% of transactions. Default in 2\% of loans.
+How do we train models when positive cases are extremely rare?
+
+\vspace{0.3em}
 \textbf{After this lesson, you will be able to:}
 \begin{itemize}
-\item Identify imbalanced datasets
-\item Apply SMOTE oversampling
-\item Use class weights
-\item Evaluate fairly
+\item Identify and diagnose imbalanced datasets
+\item Apply SMOTE and other oversampling techniques
+\item Use class weights to rebalance training
+\item Evaluate models fairly on imbalanced data
 \end{itemize}
-\bottomnote{Building towards your final project}
+\bottomnote{Finance Application: Fraud detection, default prediction, rare event modeling}
 \end{frame}
 
 
-\begin{frame}[t]{Imbalance Problem}
+\begin{frame}[t]{The Imbalance Problem}
+\textbf{Why Standard Models Fail}
+\begin{itemize}
+\item Model learns to predict majority class (easy 99\% accuracy)
+\item Minority class is ignored because errors are ``cheap''
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{01_imbalance_problem/chart.pdf}
+\includegraphics[width=0.55\textwidth]{01_imbalance_problem/chart.pdf}
 \end{center}
+\bottomnote{Check: If your model predicts same class 95\%+ of the time, you have a problem}
 \end{frame}
 
 
 \begin{frame}[t]{Sampling Strategies}
+\textbf{Rebalancing the Training Data}
+\begin{itemize}
+\item Undersampling: remove majority class samples (loses information)
+\item Oversampling: duplicate or synthesize minority samples
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{02_sampling_strategies/chart.pdf}
+\includegraphics[width=0.55\textwidth]{02_sampling_strategies/chart.pdf}
 \end{center}
+\bottomnote{Rule: Only resample training data, never test data -- test must reflect reality}
 \end{frame}
 
 
-\begin{frame}[t]{Smote}
+\begin{frame}[t]{SMOTE}
+\textbf{Synthetic Minority Over-sampling Technique}
+\begin{itemize}
+\item Creates synthetic samples by interpolating between minority neighbors
+\item \texttt{from imblearn.over\_sampling import SMOTE}
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{03_smote/chart.pdf}
+\includegraphics[width=0.55\textwidth]{03_smote/chart.pdf}
 \end{center}
+\bottomnote{SMOTE creates new points along lines between existing minority samples}
 \end{frame}
 
 
 \begin{frame}[t]{Class Weights}
+\textbf{Rebalancing Without Resampling}
+\begin{itemize}
+\item Give higher weight to minority class errors in loss function
+\item sklearn: \texttt{class\_weight='balanced'} or custom weights
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{04_class_weights/chart.pdf}
+\includegraphics[width=0.55\textwidth]{04_class_weights/chart.pdf}
 \end{center}
+\bottomnote{Balanced weights: inversely proportional to class frequency}
 \end{frame}
 
 
-\begin{frame}[t]{Stratified Cv}
+\begin{frame}[t]{Stratified Cross-Validation}
+\textbf{Preserving Class Proportions}
+\begin{itemize}
+\item Regular CV may put all rare events in one fold
+\item Stratified CV ensures each fold has same class ratio
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{05_stratified_cv/chart.pdf}
+\includegraphics[width=0.55\textwidth]{05_stratified_cv/chart.pdf}
 \end{center}
+\bottomnote{Always use \texttt{StratifiedKFold} for imbalanced classification}
 \end{frame}
 
 
-\begin{frame}[t]{Precision Recall Tradeoff}
+\begin{frame}[t]{Precision-Recall Trade-off}
+\textbf{Finding the Right Balance}
+\begin{itemize}
+\item Precision-Recall curve better than ROC for imbalanced data
+\item Area under PR curve (AP) is more informative than AUC
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{06_precision_recall_tradeoff/chart.pdf}
+\includegraphics[width=0.55\textwidth]{06_precision_recall_tradeoff/chart.pdf}
 \end{center}
+\bottomnote{PR curve focuses on positive class -- what we care about in imbalanced problems}
 \end{frame}
 
 
-\begin{frame}[t]{Cost Sensitive}
+\begin{frame}[t]{Cost-Sensitive Learning}
+\textbf{Encoding Business Costs}
+\begin{itemize}
+\item FN (missed fraud) costs \$1000, FP (false alarm) costs \$10
+\item Optimal threshold minimizes expected total cost
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{07_cost_sensitive/chart.pdf}
+\includegraphics[width=0.55\textwidth]{07_cost_sensitive/chart.pdf}
 \end{center}
+\bottomnote{Formula: Expected Cost = FN $\times$ Cost$_{FN}$ + FP $\times$ Cost$_{FP}$}
 \end{frame}
 
 
-\begin{frame}[t]{Fraud Detection}
+\begin{frame}[t]{Fraud Detection Example}
+\textbf{Putting It All Together}
+\begin{itemize}
+\item Real-world fraud rates: 0.1-1\% positive
+\item Pipeline: SMOTE + class weights + stratified CV + PR evaluation
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{08_fraud_detection/chart.pdf}
+\includegraphics[width=0.55\textwidth]{08_fraud_detection/chart.pdf}
 \end{center}
+\bottomnote{Industry insight: Ensemble methods (XGBoost, LightGBM) work well for fraud}
+\end{frame}
+
+
+\begin{frame}[t]{Hands-On Exercise (25 min)}
+\textbf{Task: Build a Fraud Detection Model}
+\begin{enumerate}
+\item Create synthetic imbalanced data (1\% fraud rate)
+\item Train baseline model -- observe accuracy trap
+\item Apply SMOTE and retrain -- compare recall
+\item Use class\_weight='balanced' -- compare to SMOTE
+\item Plot Precision-Recall curve for best model
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Deliverable:} Comparison table of recall/precision across methods.
+\bottomnote{Extension: Implement cost-sensitive threshold selection}
 \end{frame}
 
 
 \begin{frame}[t]{Lesson Summary}
+\textbf{Problem Solved:}
+We can now handle imbalanced datasets common in finance (fraud, default, rare events).
+
+\vspace{0.3em}
 \textbf{Key Takeaways:}
 \begin{itemize}
-\item Identify imbalanced datasets
-\item Apply SMOTE oversampling
-\item Use class weights
-\item Evaluate fairly
+\item Accuracy misleads on imbalanced data -- use precision/recall
+\item SMOTE creates synthetic minority samples
+\item Class weights: alternative to resampling
+\item Always use stratified CV and PR curves
 \end{itemize}
-\bottomnote{Apply these skills in your final project}
+
+\vspace{0.3em}
+\textbf{Next Lesson:} KMeans Clustering (L29) -- unsupervised learning begins
+\bottomnote{Memory: SMOTE = Synthetic samples. Class weights = penalize minority errors more.}
 \end{frame}
 
 \end{document}

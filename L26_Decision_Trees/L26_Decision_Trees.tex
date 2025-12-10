@@ -29,82 +29,158 @@
 \end{frame}
 
 \begin{frame}[t]{Learning Objectives}
+\textbf{The Problem:}
+Logistic regression assumes linear decision boundaries.
+What if the relationship between features and class is more complex?
+
+\vspace{0.3em}
 \textbf{After this lesson, you will be able to:}
 \begin{itemize}
 \item Build decision tree classifiers
-\item Understand splitting criteria
-\item Apply Random Forest ensemble
-\item Interpret feature importance
+\item Understand splitting criteria (Gini, Entropy)
+\item Apply Random Forest for better generalization
+\item Interpret feature importance from tree models
 \end{itemize}
-\bottomnote{Building towards your final project}
+\bottomnote{Finance Application: Rule-based credit scoring and trading signals}
 \end{frame}
 
 
 \begin{frame}[t]{Tree Structure}
+\textbf{If-Then Rules as a Tree}
+\begin{itemize}
+\item Root node: first split on most informative feature
+\item Leaf nodes: final class predictions
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{01_tree_structure/chart.pdf}
+\includegraphics[width=0.55\textwidth]{01_tree_structure/chart.pdf}
 \end{center}
+\bottomnote{Trees are interpretable: you can explain exactly why a prediction was made}
 \end{frame}
 
 
-\begin{frame}[t]{Gini Entropy}
+\begin{frame}[t]{Gini and Entropy}
+\textbf{How to Choose the Best Split?}
+\begin{itemize}
+\item Gini: $1 - \sum p_i^2$ -- measures impurity (lower = purer)
+\item Entropy: $-\sum p_i \log p_i$ -- information gain criterion
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{02_gini_entropy/chart.pdf}
+\includegraphics[width=0.55\textwidth]{02_gini_entropy/chart.pdf}
 \end{center}
+\bottomnote{In practice: Gini and Entropy give similar results. sklearn default is Gini.}
 \end{frame}
 
 
-\begin{frame}[t]{Tree Sklearn}
+\begin{frame}[t]{sklearn Decision Tree}
+\textbf{Building Trees in Python}
+\begin{itemize}
+\item \texttt{from sklearn.tree import DecisionTreeClassifier}
+\item Key params: \texttt{max\_depth}, \texttt{min\_samples\_leaf}
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{03_tree_sklearn/chart.pdf}
+\includegraphics[width=0.55\textwidth]{03_tree_sklearn/chart.pdf}
 \end{center}
+\bottomnote{Always set max\_depth to prevent trees from memorizing training data}
 \end{frame}
 
 
-\begin{frame}[t]{Overfitting}
+\begin{frame}[t]{Overfitting in Trees}
+\textbf{The Danger of Deep Trees}
+\begin{itemize}
+\item Unlimited depth: tree can perfectly fit training data (100\% accuracy)
+\item Test accuracy often much worse -- memorization, not learning
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{04_overfitting/chart.pdf}
+\includegraphics[width=0.55\textwidth]{04_overfitting/chart.pdf}
 \end{center}
+\bottomnote{Rule: Start with max\_depth=3, increase only if underfitting}
 \end{frame}
 
 
 \begin{frame}[t]{Random Forest}
+\textbf{Ensemble of Trees}
+\begin{itemize}
+\item Train many trees on random subsets of data and features
+\item Final prediction: majority vote (classification) or average (regression)
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{05_random_forest/chart.pdf}
+\includegraphics[width=0.55\textwidth]{05_random_forest/chart.pdf}
 \end{center}
+\bottomnote{Random Forest = bagging + feature randomization. Much more robust than single tree.}
 \end{frame}
 
 
 \begin{frame}[t]{Feature Importance}
+\textbf{Which Features Matter Most?}
+\begin{itemize}
+\item Importance = total reduction in impurity from splits on that feature
+\item Normalized to sum to 1.0 across all features
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{06_feature_importance/chart.pdf}
+\includegraphics[width=0.55\textwidth]{06_feature_importance/chart.pdf}
 \end{center}
+\bottomnote{Access via \texttt{model.feature\_importances\_} -- useful for feature selection}
 \end{frame}
 
 
-\begin{frame}[t]{Tree Visualization}
+\begin{frame}[t]{Visualizing Trees}
+\textbf{Making Trees Interpretable}
+\begin{itemize}
+\item \texttt{sklearn.tree.plot\_tree()} for inline visualization
+\item Export to Graphviz for publication-quality diagrams
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{07_tree_visualization/chart.pdf}
+\includegraphics[width=0.55\textwidth]{07_tree_visualization/chart.pdf}
 \end{center}
+\bottomnote{Visualization helps explain model decisions to non-technical stakeholders}
 \end{frame}
 
 
-\begin{frame}[t]{Finance Trees}
+\begin{frame}[t]{Finance Application}
+\textbf{Trading Rules from Trees}
+\begin{itemize}
+\item Trees naturally create rule-based strategies
+\item Example: ``If RSI $< 30$ AND volume $> 2\times$avg, then BUY''
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{08_finance_trees/chart.pdf}
+\includegraphics[width=0.55\textwidth]{08_finance_trees/chart.pdf}
 \end{center}
+\bottomnote{Caution: Trees overfit easily on financial data -- use cross-validation}
+\end{frame}
+
+
+\begin{frame}[t]{Hands-On Exercise (25 min)}
+\textbf{Task: Build a Trading Signal Classifier}
+\begin{enumerate}
+\item Features: RSI, MACD, Bollinger Band position, volume ratio
+\item Target: 1 if next-5-day return $> 2\%$, else 0
+\item Train DecisionTree with max\_depth=4 and RandomForest
+\item Compare test accuracy -- which generalizes better?
+\item Plot feature importance for Random Forest
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Deliverable:} Tree visualization + feature importance bar chart.
+\bottomnote{Extension: Try different max\_depth values -- plot train vs test accuracy}
 \end{frame}
 
 
 \begin{frame}[t]{Lesson Summary}
+\textbf{Problem Solved:}
+Decision trees capture non-linear relationships and produce interpretable rules.
+
+\vspace{0.3em}
 \textbf{Key Takeaways:}
 \begin{itemize}
-\item Build decision tree classifiers
-\item Understand splitting criteria
-\item Apply Random Forest ensemble
-\item Interpret feature importance
+\item Trees split on features that maximize information gain
+\item Control complexity via max\_depth, min\_samples\_leaf
+\item Random Forest: many trees $>$ one tree (reduces overfitting)
+\item Feature importance reveals which variables drive predictions
 \end{itemize}
-\bottomnote{Apply these skills in your final project}
+
+\vspace{0.3em}
+\textbf{Next Lesson:} Classification Metrics (L27) -- beyond accuracy
+\bottomnote{Memory: Single tree overfits. Random Forest averages many trees for stability.}
 \end{frame}
 
 \end{document}
