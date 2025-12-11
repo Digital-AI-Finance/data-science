@@ -45,16 +45,45 @@ How do we build models that generalize to unseen data?
 \end{frame}
 
 
-\begin{frame}[t]{The Overfitting Problem}
-\textbf{When Models Memorize Instead of Learn}
+\begin{frame}[t]{Underfitting: Model Too Simple}
+\textbf{When Models Miss the Pattern}
 \begin{itemize}
-\item High training accuracy but poor test performance
-\item Complex models fit noise in the training data
+\item Constant prediction ignores relationship in data
+\item High error on both training and test sets
 \end{itemize}
 \begin{center}
-\includegraphics[width=0.55\textwidth]{01_overfitting_visual/chart.pdf}
+\includegraphics[width=0.55\textwidth]{01a_underfitting/chart.pdf}
 \end{center}
-\bottomnote{Red flag: If train error keeps dropping but test error rises, you're overfitting}
+\bottomnote{Underfitting = high bias. The model is too simple to capture the true pattern.}
+\end{frame}
+
+
+\begin{frame}[t]{Good Fit: Right Complexity}
+\begin{center}
+\includegraphics[width=0.65\textwidth]{01b_good_fit/chart.pdf}
+\end{center}
+\bottomnote{The goal: A model complex enough to capture patterns, simple enough to generalize}
+\end{frame}
+
+
+\begin{frame}[t]{Overfitting: Model Too Complex}
+\textbf{When Models Memorize Noise}
+\begin{itemize}
+\item Perfect fit on training data, poor on new data
+\item High-degree polynomials chase every point
+\end{itemize}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{01c_overfitting/chart.pdf}
+\end{center}
+\bottomnote{Overfitting = high variance. Model changes drastically with different training samples.}
+\end{frame}
+
+
+\begin{frame}[t]{Bias-Variance Tradeoff}
+\begin{center}
+\includegraphics[width=0.65\textwidth]{01d_bias_variance/chart.pdf}
+\end{center}
+\bottomnote{Regularization helps find the optimal complexity -- not too simple, not too complex}
 \end{frame}
 
 
@@ -84,12 +113,37 @@ How do we build models that generalize to unseen data?
 \end{frame}
 
 
-\begin{frame}[t]{Coefficient Paths}
-\textbf{How Coefficients Change with Lambda}
+\begin{frame}[t]{Ridge Coefficient Path}
+\textbf{Smooth Shrinkage Toward Zero}
+\begin{itemize}
+\item All coefficients shrink as $\lambda$ increases
+\item Coefficients approach but never reach zero
+\end{itemize}
 \begin{center}
-\includegraphics[width=0.65\textwidth]{04_coefficient_paths/chart.pdf}
+\includegraphics[width=0.55\textwidth]{04a_ridge_path/chart.pdf}
 \end{center}
-\bottomnote{As $\lambda$ increases, coefficients shrink. Lasso drives some to zero; Ridge does not.}
+\bottomnote{Ridge keeps all features in the model -- good when all predictors may be relevant}
+\end{frame}
+
+
+\begin{frame}[t]{Lasso Coefficient Path}
+\textbf{Sparse Feature Selection}
+\begin{itemize}
+\item Coefficients hit exactly zero at different $\lambda$ values
+\item Weaker predictors are eliminated first
+\end{itemize}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{04b_lasso_path/chart.pdf}
+\end{center}
+\bottomnote{Lasso automatically selects the most important features}
+\end{frame}
+
+
+\begin{frame}[t]{Lasso Feature Count}
+\begin{center}
+\includegraphics[width=0.65\textwidth]{04c_feature_count/chart.pdf}
+\end{center}
+\bottomnote{As $\lambda$ increases, fewer features remain -- use CV to find optimal sparsity}
 \end{frame}
 
 

@@ -1,12 +1,12 @@
 # Data Science with Python - Course Index
 
-*Generated: 2025-12-11 00:11*
+*Generated: 2025-12-11 10:12*
 
 ## Course Overview
 
 - **Lessons:** 48
-- **Total Slides:** 602
-- **Total Charts:** 443
+- **Total Slides:** 607
+- **Total Charts:** 453
 - **Modules:** 10
 
 ## Module 1: Python Fundamentals
@@ -145,15 +145,15 @@
 
 ### L22: Regularization
 
-- **Slides:** 12 | **Charts:** 15
+- **Slides:** 17 | **Charts:** 15
 - **Folder:** `L22_Regularization/`
 - **Charts:** 01_overfitting_visual, 01a_underfitting, 01b_good_fit, 01c_overfitting, 01d_bias_variance (+10 more)
 
 ### L23: Regression Metrics
 
-- **Slides:** 12 | **Charts:** 8
+- **Slides:** 12 | **Charts:** 11
 - **Folder:** `L23_Regression_Metrics/`
-- **Charts:** 01_mse_formula, 02_rmse_mae, 03_r_squared, 04_adjusted_r2, 05_residual_analysis (+3 more)
+- **Charts:** 01_mse_formula, 02_rmse_mae, 02a_rmse_concept, 02b_mae_concept, 02c_metric_comparison (+6 more)
 
 ### L24: Factor Models
 
@@ -165,21 +165,21 @@
 
 ### L25: Logistic Regression
 
-- **Slides:** 12 | **Charts:** 8
+- **Slides:** 12 | **Charts:** 10
 - **Folder:** `L25_Logistic_Regression/`
-- **Charts:** 01_sigmoid_function, 02_decision_boundary, 03_sklearn_logistic, 04_odds_ratio, 05_multiclass (+3 more)
+- **Charts:** 01_sigmoid_function, 01a_sigmoid_function, 01b_probability_output, 02_decision_boundary, 03_sklearn_logistic (+5 more)
 
 ### L26: Decision Trees
 
-- **Slides:** 12 | **Charts:** 8
+- **Slides:** 12 | **Charts:** 10
 - **Folder:** `L26_Decision_Trees/`
-- **Charts:** 01_tree_structure, 02_gini_entropy, 03_tree_sklearn, 04_overfitting, 05_random_forest (+3 more)
+- **Charts:** 01_tree_structure, 02_gini_entropy, 02a_gini_impurity, 02b_entropy, 03_tree_sklearn (+5 more)
 
 ### L27: Classification Metrics
 
-- **Slides:** 12 | **Charts:** 8
+- **Slides:** 12 | **Charts:** 11
 - **Folder:** `L27_Classification_Metrics/`
-- **Charts:** 01_confusion_matrix, 02_accuracy_problems, 03_precision_recall, 04_f1_score, 05_roc_curve (+3 more)
+- **Charts:** 01_confusion_matrix, 01a_confusion_matrix, 02_accuracy_problems, 03_precision_recall, 03a_precision (+6 more)
 
 ### L28: Class Imbalance
 
